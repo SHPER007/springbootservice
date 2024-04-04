@@ -1,5 +1,6 @@
 package com.example.springbootservice.response;
 
+import com.example.springbootservice.conf.utils.GenerateTraceIdUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class BaseResponseResult implements Serializable {
     private Boolean success;
     private String message;
     private Object data;
+    private String traceId = GenerateTraceIdUtil.getTracId();
 
     public static BaseResponseResult success(String message){
         BaseResponseResult baseResponseResult = new BaseResponseResult();
