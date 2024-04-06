@@ -5,6 +5,7 @@ import com.example.springbootservice.response.BaseResponseResult;
 import com.example.springbootservice.services.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,8 +22,12 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Value("${start.time}")
+    private Long startTime;
+
     @GetMapping(value = "/{userid}")
     public BaseResponseResult getUserById(@PathVariable Integer userid){
+        System.out.println(startTime);
         User user = userService.getUserById(userid);
         return BaseResponseResult.success("OK", user);
     }

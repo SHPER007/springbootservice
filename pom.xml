@@ -59,6 +59,26 @@
             <version>3.0.3</version>
         </dependency>
 
+        <!-- nacos客户端依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>2023.0.0.0-RC1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>2023.0.0.0-RC1</version>
+        </dependency>
+        <!-- 支持bootstrap优先加载方式 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
+
 
     </dependencies>
 

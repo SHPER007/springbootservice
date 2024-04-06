@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: appservice
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      config:
+        file-extension: properties
+
+
+
+
+
+
