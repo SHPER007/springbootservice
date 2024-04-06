@@ -6,6 +6,7 @@ import com.example.springbootservice.services.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@RefreshScope
 public class UserController {
     @Resource
     private UserService userService;
@@ -25,11 +27,19 @@ public class UserController {
     @Value("${start.time}")
     private Long startTime;
 
+    @Value("${active.name}")
+    private String name;
+
     @GetMapping(value = "/{userid}")
     public BaseResponseResult getUserById(@PathVariable Integer userid){
-        System.out.println(startTime);
         User user = userService.getUserById(userid);
         return BaseResponseResult.success("OK", user);
     }
+
+    @GetMapping(value = "/test")
+    public BaseResponseResult getUserById(){
+        return BaseResponseResult.success(name);
+    }
+
 
 }
