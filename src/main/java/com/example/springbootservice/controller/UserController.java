@@ -40,6 +40,4 @@ public class UserController {
     public BaseResponseResult getUserById(){
         return BaseResponseResult.success(name);
     }
-
-
 }
