@@ -3,6 +3,9 @@
 
     <springProperty scope="context" name="appName" source="spring.application.name"/>
 
+
+    <Property name="globalVar" value="sql"/>
+
     <!-- 输出到控制台 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -23,14 +26,30 @@
         </encoder>
     </appender>
 
+
+    <appender name="SQL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/${globalVar}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/${globalVar}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 保留30天内的日志 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%X{TraceId}] [%thread] %logger{36} [%file:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- 根 logger -->
-    <root level="INFO">
+    <root level="debug">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
 
     <!-- 可选：为特定包或者类设置不同的日志级别 -->
-    <logger name="com.example.myproject.package" level="DEBUG"/>
+    <logger name="com.example.springbootservice.conf.utils" level="DEBUG" additivity="false">
+        <appender-ref ref="SQL_FILE"/>
+    </logger>
+
 
     <!-- 可选：处理Spring Profile相关的条件配置 -->
     <springProfile name="dev">
@@ -38,13 +57,5 @@
         <logger name="org.hibernate.SQL" level="DEBUG"/>
     </springProfile>
 
-    <!-- 可选：控制台输出更简洁的格式 -->
-    <springProfile name="prod">
-        <appender-ref ref="CONSOLE" />
-        <root level="INFO">
-            <appender-ref ref="CONSOLE" />
-        </root>
-        <logger name="org.springframework.web" level="WARN"/>
-    </springProfile>
 
 </configuration>

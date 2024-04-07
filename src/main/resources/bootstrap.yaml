@@ -1,3 +1,4 @@
+# 服务注册到nacos
 spring:
   application:
     name: appservice
