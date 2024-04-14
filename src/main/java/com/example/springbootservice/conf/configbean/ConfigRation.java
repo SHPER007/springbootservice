@@ -11,9 +11,9 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 /**
- * ClassName:Configer
+ * ClassName:ConfigRation
  * Package:com.example.springbootservice.configration
- * Description:TODO
+ * Description:注册traceID过滤器
  * Date:2024/4/1 0001 0:45
  * Author:2498897200@qq.com
  */

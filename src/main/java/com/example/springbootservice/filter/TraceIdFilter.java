@@ -24,7 +24,6 @@ public class TraceIdFilter implements Filter {
         log.info("init trace filter..");
 
     }
-
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         try {

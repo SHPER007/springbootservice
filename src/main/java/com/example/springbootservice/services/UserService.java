@@ -14,11 +14,7 @@ import java.util.List;
  */
 
 public interface UserService {
-
     User getUserById(Integer userId);
-    /**
-    *Description:查询所有
-    */
     List<User> userList();
     List<User> pageUserList();
 

@@ -29,7 +29,6 @@ public class StockServiceImpl implements OrderService {
     public boolean creatOrder(UserDto userDto, OrderCreatParam param) {
         String lockKey = "stock_lock"+param.getProductId();
         String lockValue = UUID.randomUUID().toString();
-
         boolean isGetLock = redisLockUtil.tryGetLock(lockKey, lockValue, RedisExpire.EXPIRE_TIME);
         if (!isGetLock){
             log.info("fail to get lock");

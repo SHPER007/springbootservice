@@ -90,9 +90,6 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
             <version>4.1.2</version>
         </dependency>
-
-
-
     </dependencies>
 
     <build>

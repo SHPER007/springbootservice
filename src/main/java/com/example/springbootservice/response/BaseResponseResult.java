@@ -31,9 +31,7 @@ public class BaseResponseResult implements Serializable {
         if(data == null){
             data = "";
         }
-        BaseResponseResult baseResponseResult = new BaseResponseResult();
-        baseResponseResult.setSuccess(true);
-        baseResponseResult.setMessage(message);
+        BaseResponseResult baseResponseResult = success(message);
         baseResponseResult.setData(data);
         return baseResponseResult;
     }

@@ -4,7 +4,7 @@
 <mapper namespace="com.example.springbootservice.mapperdao.UserMapper">
     <select id="getUserById" parameterType="java.lang.Integer" resultType="User">
         select *
-        from spingbootservice.user
+        from springservice.user
         where id = #{id}
     </select>
 

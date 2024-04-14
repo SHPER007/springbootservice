@@ -18,7 +18,7 @@ public class User {
     private Integer id;
     private String nickName;
     private Integer age;
-    private String address;
     private String phoneNumber;
+    private String address;
 
 }
