@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Data
 @Validated
-public class UserDto {
+public class UserDtoParam {
     @NotBlank(message = "用户名称不能为空")
     private String name;
 

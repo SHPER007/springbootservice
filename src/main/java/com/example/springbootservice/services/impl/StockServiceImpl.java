@@ -2,7 +2,7 @@ package com.example.springbootservice.services.impl;
 
 import com.example.springbootservice.conf.contants.RedisExpire;
 import com.example.springbootservice.paramdto.OrderCreatParam;
-import com.example.springbootservice.paramdto.UserDto;
+import com.example.springbootservice.paramdto.UserDtoParam;
 import com.example.springbootservice.services.OrderService;
 import com.example.springbootservice.conf.utils.RedisLockUtil;
 import jakarta.annotation.Resource;
@@ -26,7 +26,7 @@ public class StockServiceImpl implements OrderService {
     RedisLockUtil redisLockUtil;
 
     @Override
-    public boolean creatOrder(UserDto userDto, OrderCreatParam param) {
+    public boolean creatOrder(UserDtoParam userDtoParam, OrderCreatParam param) {
         String lockKey = "stock_lock"+param.getProductId();
         String lockValue = UUID.randomUUID().toString();
         boolean isGetLock = redisLockUtil.tryGetLock(lockKey, lockValue, RedisExpire.EXPIRE_TIME);

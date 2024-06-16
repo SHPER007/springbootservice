@@ -2,6 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootservice.mapperdao.UserMapper">
+    <resultMap id="UserWithRolesResultMap" type="User">
+        <id property="id" column="id"/>
+        <!-- 映射其他用户属性 -->
+        <result property="age" column="age"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="address" column="address"/>
+        <result property="password" column="password"/>
+        <!-- 处理多对多关系，假设User类中有一个List<Role> roles属性 -->
+        <collection property="roles" ofType="Role">
+            <result property="id" column="role_id"/>
+            <result property="role" column="role"/>
+            <!-- 其他Role属性映射... -->
+        </collection>
+
+    </resultMap>
+
+    <!-- 查询用户及其所有角色 -->
+    <select id="getUserByIdWithRoles" resultMap="UserWithRolesResultMap">
+        SELECT
+            u.*,
+            r.id AS role_id, r.role
+        FROM
+            user u
+                LEFT JOIN
+            user_role ur ON u.id = ur.user_id
+                LEFT JOIN
+            role r ON ur.role_id = r.id
+        WHERE
+            u.id = #{id}
+    </select>
+
     <select id="getUserById" parameterType="java.lang.Integer" resultType="User">
         select *
         from springservice.user

@@ -1,5 +1,6 @@
 package com.example.springbootservice.paramdto;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 
 /**
@@ -10,7 +11,8 @@ import lombok.Data;
  * Author:2498897200@qq.com
  */
 @Data
-public class UserOrderDto {
-    private UserDto UserDto;
+public class UserOrderDtoParam {
+    @Valid
+    private UserDtoParam UserDtoParam;
     private OrderCreatParam orderCreatParam;
 }

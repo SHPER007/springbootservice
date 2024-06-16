@@ -1,7 +1,6 @@
 package com.example.springbootservice.services;
 
 import com.example.springbootservice.mysqlbean.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,10 +13,7 @@ import java.util.List;
  */
 
 public interface UserService {
-    User getUserById(Integer userId);
+    User getUserByIdWithRoles(Integer userId);
     List<User> userList();
     List<User> pageUserList();
-
-
-
 }

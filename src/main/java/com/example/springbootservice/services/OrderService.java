@@ -1,7 +1,7 @@
 package com.example.springbootservice.services;
 
 import com.example.springbootservice.paramdto.OrderCreatParam;
-import com.example.springbootservice.paramdto.UserDto;
+import com.example.springbootservice.paramdto.UserDtoParam;
 
 /**
  * ClassName:StockService
@@ -12,5 +12,5 @@ import com.example.springbootservice.paramdto.UserDto;
  */
 public interface OrderService {
 
-    boolean creatOrder(UserDto userDto, OrderCreatParam param);
+    boolean creatOrder(UserDtoParam userDtoParam, OrderCreatParam param);
 }

@@ -1,8 +1,8 @@
 package com.example.springbootservice.controller;
 
 import com.example.springbootservice.paramdto.OrderCreatParam;
-import com.example.springbootservice.paramdto.UserDto;
-import com.example.springbootservice.paramdto.UserOrderDto;
+import com.example.springbootservice.paramdto.UserDtoParam;
+import com.example.springbootservice.paramdto.UserOrderDtoParam;
 import com.example.springbootservice.response.BaseResponseResult;
 import com.example.springbootservice.services.OrderService;
 import jakarta.annotation.Resource;
@@ -26,10 +26,10 @@ public class OrderController {
     @Resource
     OrderService orderService;
     @RequestMapping("/order")
-    public BaseResponseResult creatOrder(@RequestBody @Valid UserOrderDto userOrderDto){
-        UserDto userDto = userOrderDto.getUserDto();
-        OrderCreatParam orderParam = userOrderDto.getOrderCreatParam();
-        boolean orderResult = orderService.creatOrder(userDto, orderParam);
+    public BaseResponseResult creatOrder(@RequestBody @Valid UserOrderDtoParam userOrderDtoParam){
+        UserDtoParam userDtoParam = userOrderDtoParam.getUserDtoParam();
+        OrderCreatParam orderCreatParam = userOrderDtoParam.getOrderCreatParam();
+        boolean orderResult = orderService.creatOrder(userDtoParam, orderCreatParam);
         if (!orderResult){
             return BaseResponseResult.fail("下单失败");
         }

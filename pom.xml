@@ -90,8 +90,14 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
             <version>4.1.2</version>
         </dependency>
-    </dependencies>
 
+        <!--适配器类-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+    </dependencies>
     <build>
         <plugins>
             <plugin>

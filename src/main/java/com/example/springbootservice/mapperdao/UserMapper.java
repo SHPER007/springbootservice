@@ -21,7 +21,7 @@ public interface UserMapper {
     /**
      *Description:查询单个用户
      */
-    User getUserById(Integer userId);
+    User getUserByIdWithRoles(Integer userId);
 
     /**
      *Description:查询所有

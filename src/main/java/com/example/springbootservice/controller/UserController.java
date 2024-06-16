@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping(value = "/{userid}")
     public BaseResponseResult getUserById(@PathVariable Integer userid){
-        User user = userService.getUserById(userid);
+        User user = userService.getUserByIdWithRoles(userid);
         return BaseResponseResult.success("OK", user);
     }
 
