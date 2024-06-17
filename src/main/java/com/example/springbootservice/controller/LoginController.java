@@ -4,7 +4,6 @@ import com.example.springbootservice.paramdto.LoginRequestDtoParam;
 import com.example.springbootservice.paramdto.LoginResponseDto;
 import com.example.springbootservice.response.BaseResponseResult;
 import com.example.springbootservice.services.LoginService;
-import com.example.springbootservice.services.impl.LoginServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,13 +30,16 @@ public class LoginController {
     *Description: token下发接口
     */
     @PostMapping("login")
-    public BaseResponseResult login(@RequestBody LoginRequestDtoParam loginRequestDtoParam){
+    public BaseResponseResult login(@RequestBody LoginRequestDtoParam loginRequestDtoParam) {
         LoginResponseDto loginResponseDto = loginService.login(loginRequestDtoParam);
-        if (loginResponseDto != null){
-            return BaseResponseResult.success("OK", loginResponseDto);
-        }else {
+        if (loginResponseDto == null) {
             return BaseResponseResult.fail("账号与密码不匹配，请重新输入");
+        } else if (loginResponseDto.getToken().equals("fail")) {
+            return BaseResponseResult.fail("生成token失败");
         }
-
+        return BaseResponseResult.success("OK", loginResponseDto);
     }
 }
+
+
+

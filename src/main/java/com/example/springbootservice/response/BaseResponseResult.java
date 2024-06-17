@@ -36,8 +36,6 @@ public class BaseResponseResult implements Serializable {
         return baseResponseResult;
     }
 
-
-
     public static BaseResponseResult fail(String message){
         BaseResponseResult baseResponseResult = new BaseResponseResult();
         baseResponseResult.setSuccess(false);

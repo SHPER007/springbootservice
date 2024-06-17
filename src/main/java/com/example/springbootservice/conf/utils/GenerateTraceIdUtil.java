@@ -1,8 +1,6 @@
 package com.example.springbootservice.conf.utils;
 
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 

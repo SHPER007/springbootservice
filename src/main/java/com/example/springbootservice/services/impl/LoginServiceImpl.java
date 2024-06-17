@@ -1,11 +1,11 @@
 package com.example.springbootservice.services.impl;
 
+import com.example.springbootservice.conf.utils.GenerateJwtUtil;
 import com.example.springbootservice.mapperdao.UserMapper;
 import com.example.springbootservice.mysqlbean.User;
 import com.example.springbootservice.paramdto.LoginRequestDtoParam;
 import com.example.springbootservice.paramdto.LoginResponseDto;
 import com.example.springbootservice.services.LoginService;
-import com.example.springbootservice.services.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,15 +19,18 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
-
     /**
     *Params:
     *Return:
     *Description: 下发token逻辑
     */
     @Resource
+    GenerateJwtUtil GenerateJwtUtil;
+    @Resource
     UserMapper userMapper;
-    @Override
+    @Resource
+    GenerateJwtUtil generateJwtUtil;
+    
     public LoginResponseDto login(LoginRequestDtoParam loginRequestDtoParam) {
         Integer userid = loginRequestDtoParam.getUserid();
         String userInputPassword = loginRequestDtoParam.getPassword();
@@ -43,8 +46,16 @@ public class LoginServiceImpl implements LoginService {
             return null;
         }
         // 下发token
-
-
-        return null;
+        try {
+            String token = generateJwtUtil.generateToken(userBean);
+            LoginResponseDto loginResponseDto = new LoginResponseDto();
+            loginResponseDto.setToken(token);
+            return loginResponseDto;
+        }catch (Exception e){
+            log.error("生成jwt-token失败");
+            LoginResponseDto loginResponseDto = new LoginResponseDto();
+            loginResponseDto.setToken("fail");
+            return loginResponseDto;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.springbootservice.paramdto;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 /**
  * ClassName:LoginResponseDto
@@ -9,6 +10,7 @@ import lombok.Data;
  * Date:2024/6/16 14:48
  */
 @Data
+@Component
 public class LoginResponseDto {
     private String token;
 

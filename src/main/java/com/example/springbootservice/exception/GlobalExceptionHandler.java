@@ -26,7 +26,14 @@ public class GlobalExceptionHandler {
         String message = "服务繁忙,请稍后再试！";
         log.info("全局捕获异常{}", e.toString());
         return BaseResponseResult.fail(message);
-
     }
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(JwtGenerationException.class)
+//    public BaseResponseResult handleJwtGenerationException(JwtGenerationException ex) {
+//        String message = "token生成失败！";// 设置一个错误标记或者默认值
+//        LoginResponseDto errorResponse = new LoginResponseDto();
+//        errorResponse.setToken("ERR_TOKEN_GENERATION");
+//        return BaseResponseResult.fail(message);
+//    }
 
 }
