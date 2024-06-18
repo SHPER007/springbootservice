@@ -33,22 +33,22 @@ public class GenerateJwtUtil {
     private int expiresMs;
 
     public String generateToken(User user) {
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("id", user.getId());
-        claims.put("name",user.getNickName());
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put("id", user.getId());
+        userMap.put("name",user.getNickName());
         String token = JWT.create()
-                .withClaim("user", claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + expiresMs))
-                .sign(Algorithm.HMAC256(secret));
+                .withClaim("userMapKey", userMap)
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000*60*60*12))
+                .sign(Algorithm.HMAC256("secreter"));
         return token;
     }
 
-    public Map<String, Object> parseToken(String string) {
+    public Map<String, Object> parseToken(String token) {
         //定义字符串模拟用户传递过来的token
         try {
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(string);
+            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256("secreter")).build().verify(token);
             Map<String, Claim> claims = decodedJWT.getClaims();
-            return claims.get(userInfoKey).asMap();
+            return claims.get("userMapKey").asMap();
         }catch (Exception e){
             log.info("解析token异常{}", e.getMessage());
             return null;

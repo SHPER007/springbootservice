@@ -17,6 +17,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    public User(Integer id,String nickName){
+        this.id = id;
+        this.nickName = nickName;
+    }
     private Integer id;
     private Integer age;
     private String nickName;

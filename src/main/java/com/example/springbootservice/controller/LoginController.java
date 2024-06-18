@@ -34,7 +34,7 @@ public class LoginController {
         LoginResponseDto loginResponseDto = loginService.login(loginRequestDtoParam);
         if (loginResponseDto == null) {
             return BaseResponseResult.fail("账号与密码不匹配，请重新输入");
-        } else if (loginResponseDto.getToken().equals("fail")) {
+        } else if (("fail").equals(loginResponseDto.getToken())) {
             return BaseResponseResult.fail("生成token失败");
         }
         return BaseResponseResult.success("OK", loginResponseDto);

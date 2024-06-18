@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.springbootservice.conf.utils.GenerateJwtUtil;
+import com.example.springbootservice.mysqlbean.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -31,12 +33,23 @@ public class JwtTest {
     @Test
     public void parseToken() {
         //定义字符串模拟用户传递过来的token
-        String string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" +
-                ".eyJ1c2VyIjp7Im5hbWUiOiIgSCIsImlkIjoxfSwiZXhwIjoxNzE4NjgxMjM3fQ" +
-                "._9Z9zrxG9W31cGL2RSIRjV22_rFDs2Y9L0_mze3wS4o";
+        String string = null;
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256("qwerasdf1002")).build().verify(string);
         Map<String, Claim> claims = decodedJWT.getClaims();
-        Claim user = claims.get("user");
+        Map<String, Object> user = claims.get("user").asMap();
         System.out.println(user);
     }
+
+    @Test
+    public void verifyToken() {
+        GenerateJwtUtil generateJwtUtil = new GenerateJwtUtil();
+        User user = new User(1,"123");
+        System.out.println(user.getNickName());
+        String s = generateJwtUtil.generateToken(user);
+        System.out.println(s);
+        Map<String, Object> stringObjectMap = generateJwtUtil.parseToken(s);
+        System.out.println(stringObjectMap);
+    }
 }
+
+
