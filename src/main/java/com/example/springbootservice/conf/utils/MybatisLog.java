@@ -6,7 +6,7 @@ import org.apache.ibatis.logging.Log;
 /**
  * ClassName:MybatisLog
  * Package:com.example.springbootservice.conf.utils
- * Description:TODO
+ * Description: 设置mybatis log 记录日志
  * Date:2024/4/7 0007 23:45
  * Author:2498897200@qq.com
  */

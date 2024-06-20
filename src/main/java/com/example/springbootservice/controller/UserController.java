@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,11 +34,11 @@ public class UserController {
     @GetMapping(value = "/{userid}")
     public BaseResponseResult getUserById(@PathVariable Integer userid){
         User user = userService.getUserByIdWithRoles(userid);
-        return BaseResponseResult.success("OK", user);
+        return BaseResponseResult.success(HttpStatus.OK.value(), "OK", user);
     }
 
     @GetMapping(value = "/test")
     public BaseResponseResult getUserById(){
-        return BaseResponseResult.success(name);
+        return BaseResponseResult.success(HttpStatus.OK.value(), name);
     }
 }

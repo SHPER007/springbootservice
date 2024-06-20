@@ -8,6 +8,7 @@ import com.example.springbootservice.services.OrderService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,9 +32,9 @@ public class OrderController {
         OrderCreatParam orderCreatParam = userOrderDtoParam.getOrderCreatParam();
         boolean orderResult = orderService.creatOrder(userDtoParam, orderCreatParam);
         if (!orderResult){
-            return BaseResponseResult.fail("下单失败");
+            return BaseResponseResult.fail(HttpStatus.BAD_REQUEST.value(),"下单失败");
         }
-        return BaseResponseResult.success("OK", null);
+        return BaseResponseResult.success(HttpStatus.OK.value(),"OK", null);
 
     }
 }

@@ -15,29 +15,32 @@ import java.io.Serializable;
 
 @Data
 public class BaseResponseResult implements Serializable {
+    private int code;
     private Boolean success;
     private String message;
     private Object data;
     private String traceId = GenerateTraceIdUtil.getTracId();
 
-    public static BaseResponseResult success(String message){
+    public static BaseResponseResult success(int code, String message){
         BaseResponseResult baseResponseResult = new BaseResponseResult();
+        baseResponseResult.setCode(code);
         baseResponseResult.setSuccess(true);
         baseResponseResult.setMessage(message);
         return baseResponseResult;
     }
 
-    public static BaseResponseResult success(String message, Object data){
+    public static BaseResponseResult success(int code, String message, Object data){
         if(data == null){
             data = "";
         }
-        BaseResponseResult baseResponseResult = success(message);
+        BaseResponseResult baseResponseResult = success(code, message);
         baseResponseResult.setData(data);
         return baseResponseResult;
     }
 
-    public static BaseResponseResult fail(String message){
+    public static BaseResponseResult fail(int code, String message){
         BaseResponseResult baseResponseResult = new BaseResponseResult();
+        baseResponseResult.setCode(code);
         baseResponseResult.setSuccess(false);
         baseResponseResult.setMessage(message);
         return baseResponseResult;

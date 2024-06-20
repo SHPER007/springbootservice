@@ -22,7 +22,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000") // 允许所有源，可替换为具体的源地址
+            .allowedOrigins("http://localhost:8080") // 允许所有源，可替换为具体的源地址
             .allowedMethods("*") // 允许所有 HTTP 方法
             .allowedHeaders("*") // 允许所有请求头
             .allowCredentials(true) // 允许携带凭据（如 Cookies）
