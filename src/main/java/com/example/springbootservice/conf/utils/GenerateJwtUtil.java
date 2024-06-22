@@ -34,7 +34,7 @@ public class GenerateJwtUtil {
 
     public String generateToken(User user) {
         HashMap<String, Object> userMap = new HashMap<>();
-        userMap.put("id", user.getId());
+        userMap.put("id", user.getUserid());
         userMap.put("name",user.getNickName());
         String token = JWT.create()
                 .withClaim("userMapKey", userMap)

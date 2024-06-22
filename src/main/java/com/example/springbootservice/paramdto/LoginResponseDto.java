@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class LoginResponseDto {
+    private Integer userid;
     private String token;
 
 }

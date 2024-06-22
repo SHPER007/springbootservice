@@ -1,5 +1,6 @@
 package com.example.springbootservice.mysqlbean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,17 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
     public User(Integer id,String nickName){
-        this.id = id;
+        this.userid = id;
         this.nickName = nickName;
     }
-    private Integer id;
+    private Integer userid;
+    @JsonIgnore
     private Integer age;
     private String nickName;
+    @JsonIgnore
     private String phoneNumber;
     private String address;
+    @JsonIgnore
     private String password;
     private Set<Role> roles;
 

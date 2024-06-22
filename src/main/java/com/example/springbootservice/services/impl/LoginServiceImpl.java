@@ -49,6 +49,7 @@ public class LoginServiceImpl implements LoginService {
         try {
             String token = generateJwtUtil.generateToken(userBean);
             LoginResponseDto loginResponseDto = new LoginResponseDto();
+            loginResponseDto.setUserid(userBean.getUserid());
             loginResponseDto.setToken(token);
             return loginResponseDto;
         }catch (Exception e){
