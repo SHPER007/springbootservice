@@ -1,4 +1,4 @@
-package com.example.springbootservice.paramdto;
+package com.example.springbootservice.resdto;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-public class LoginResponseDto {
+public class LoginResDto {
     private Integer userid;
     private String token;
 

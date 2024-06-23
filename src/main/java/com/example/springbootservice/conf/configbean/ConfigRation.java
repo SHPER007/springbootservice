@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * ClassName:ConfigRation
@@ -20,6 +21,12 @@ import org.springframework.core.annotation.Order;
 @Slf4j
 @Configuration
 public class ConfigRation {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        // 这里可以根据需要自定义RestTemplate的配置
+        return new RestTemplate();
+    }
 
     @Bean
     public RedisLockUtil redisLockUtil(){

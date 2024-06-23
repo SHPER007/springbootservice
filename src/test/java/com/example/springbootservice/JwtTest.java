@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.springbootservice.conf.utils.GenerateJwtUtil;
 import com.example.springbootservice.mysqlbean.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
  * Author:SunHang
  * Date:2024/6/17 23:12
  */
+@SpringBootTest
 public class JwtTest {
     @Test
     public  void generateToken() {
@@ -33,7 +35,7 @@ public class JwtTest {
     @Test
     public void parseToken() {
         //定义字符串模拟用户传递过来的token
-        String string = null;
+        String string = "123";
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256("qwerasdf1002")).build().verify(string);
         Map<String, Claim> claims = decodedJWT.getClaims();
         Map<String, Object> user = claims.get("user").asMap();

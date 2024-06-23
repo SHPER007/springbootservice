@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * ClassName:LoginRequestDtoParam
- * Description:TODO
+ * Description: 用户登录请求入参
  * Author:SunHang
  * Date:2024/6/16 15:01
  */

@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * ClassName:UserOrderDto
  * Package:com.example.springbootservice.projectdto
- * Description:TODO
+ * Description: 用户订单请求参数
  * Date:2024/4/1 0001 1:45
  * Author:2498897200@qq.com
  */

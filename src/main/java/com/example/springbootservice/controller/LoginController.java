@@ -1,7 +1,7 @@
 package com.example.springbootservice.controller;
 
 import com.example.springbootservice.paramdto.LoginRequestDtoParam;
-import com.example.springbootservice.paramdto.LoginResponseDto;
+import com.example.springbootservice.resdto.LoginResDto;
 import com.example.springbootservice.response.BaseResponseResult;
 import com.example.springbootservice.services.LoginService;
 import jakarta.annotation.Resource;
@@ -32,7 +32,7 @@ public class LoginController {
     */
     @PostMapping("login")
     public BaseResponseResult login(@RequestBody LoginRequestDtoParam loginRequestDtoParam) {
-        LoginResponseDto loginResponseDto = loginService.login(loginRequestDtoParam);
+        LoginResDto loginResponseDto = loginService.login(loginRequestDtoParam);
         if (loginResponseDto == null) {
             return BaseResponseResult.fail(HttpStatus.BAD_REQUEST.value(),"账号与密码不匹配，请重新输入");
         } else if (("fail").equals(loginResponseDto.getToken())) {

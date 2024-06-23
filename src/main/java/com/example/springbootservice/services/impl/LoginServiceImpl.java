@@ -4,7 +4,7 @@ import com.example.springbootservice.conf.utils.GenerateJwtUtil;
 import com.example.springbootservice.mapperdao.UserMapper;
 import com.example.springbootservice.mysqlbean.User;
 import com.example.springbootservice.paramdto.LoginRequestDtoParam;
-import com.example.springbootservice.paramdto.LoginResponseDto;
+import com.example.springbootservice.resdto.LoginResDto;
 import com.example.springbootservice.services.LoginService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     GenerateJwtUtil generateJwtUtil;
     
-    public LoginResponseDto login(LoginRequestDtoParam loginRequestDtoParam) {
+    public LoginResDto login(LoginRequestDtoParam loginRequestDtoParam) {
         Integer userid = loginRequestDtoParam.getUserid();
         String userInputPassword = loginRequestDtoParam.getPassword();
         if (userid == null || userInputPassword == null  || userInputPassword.isBlank()) {
@@ -48,13 +48,13 @@ public class LoginServiceImpl implements LoginService {
         // 下发token
         try {
             String token = generateJwtUtil.generateToken(userBean);
-            LoginResponseDto loginResponseDto = new LoginResponseDto();
+            LoginResDto loginResponseDto = new LoginResDto();
             loginResponseDto.setUserid(userBean.getUserid());
             loginResponseDto.setToken(token);
             return loginResponseDto;
         }catch (Exception e){
             log.error("生成jwt-token失败");
-            LoginResponseDto loginResponseDto = new LoginResponseDto();
+            LoginResDto loginResponseDto = new LoginResDto();
             loginResponseDto.setToken("fail");
             return loginResponseDto;
         }
