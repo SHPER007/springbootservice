@@ -28,6 +28,7 @@ public class NavInfoController {
     @GetMapping(value = "/{userid}")
     public BaseResponseResult getHeadInfoByUserId(@PathVariable Integer userid){
         HeadInfoResDto headInfoResponseDto = navHeadInfoService.getHeadInfoByUserId(userid);
+        log.info("navinfo res data:{}",headInfoResponseDto.toString());
         return BaseResponseResult.success(HttpStatus.OK.value(), "OK", headInfoResponseDto);
     }
 }

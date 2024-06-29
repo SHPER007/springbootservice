@@ -6,7 +6,7 @@
         <id property="userid" column="userid"/>
         <!-- 映射其他用户属性 -->
         <result property="age" column="age"/>
-        <result property="nickName" column="nick_name"/>
+        <result property="nickName" column="nickname"/>
         <result property="phoneNumber" column="phone_number"/>
         <result property="address" column="address"/>
         <result property="password" column="password"/>

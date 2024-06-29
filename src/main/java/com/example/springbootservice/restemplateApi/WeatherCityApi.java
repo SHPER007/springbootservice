@@ -20,11 +20,12 @@ import java.util.List;
 @Slf4j
 public class WeatherCityApi {
 
-    public static String getCityWeatherByAdCode(String cityAaCode, RestTemplate restTemplate){
+    public static String getCityWeatherByAdCode(String cityAdCode, RestTemplate restTemplate){
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(WeatherBaseURL.WEATHER_URL)
-                .queryParam("city", cityAaCode).queryParam("key", WeatherBaseURL.WEATHER_KEY);
+                .queryParam("city", cityAdCode).queryParam("key", WeatherBaseURL.WEATHER_KEY);
         try {
             String weatherApiUrl = uriComponentsBuilder.toUriString();
+            log.info("请求的天气url地址为: {}", weatherApiUrl);
             ResponseEntity<WeatherClientResDto> forEntity = restTemplate.getForEntity(weatherApiUrl, WeatherClientResDto.class);
             WeatherClientResDto weatherClientResDto = forEntity.getBody();
             if(weatherClientResDto != null && weatherClientResDto.getStatus().equals("1")){
@@ -40,6 +41,7 @@ public class WeatherCityApi {
             log.info("weather api exception{}", e.getMessage());
             return "你若安好，便是晴天";
         }
+        log.info("weather api not response ");
         return "你若安好，便是晴天";
     }
 
