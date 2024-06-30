@@ -2,6 +2,8 @@ package com.example.springbootservice;
 
 import com.example.springbootservice.conf.utils.SubStringUtil;
 import com.example.springbootservice.conf.utils.SuperLanguage;
+import com.example.springbootservice.resdto.HeadInfoResDto;
+import com.example.springbootservice.services.impl.NavInfoServiceImpl;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,9 @@ public class SubStringTest{
 
     @Resource
     RestTemplate restTemplate;
+
+    @Resource
+    NavInfoServiceImpl navInfoService;
 
     @Test
    public void subStringTest(){
@@ -45,5 +50,11 @@ public class SubStringTest{
     public void testNumber(){
         String superLanguage = SuperLanguage.getSuperLanguage();
         System.out.println(superLanguage);
+    }
+
+
+    @Test
+    public void testSubString(){
+        HeadInfoResDto headInfoByUserId = navInfoService.getHeadInfoByUserId(Integer.valueOf("10010"));
     }
 }

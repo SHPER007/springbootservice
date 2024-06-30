@@ -1,7 +1,7 @@
 package com.example.springbootservice.restemplateApi;
 
 import com.example.springbootservice.conf.contants.WeatherBaseURL;
-import com.example.springbootservice.resdto.LiveWeatheResDto;
+import com.example.springbootservice.resdto.LiveWeatherResDto;
 import com.example.springbootservice.resdto.WeatherClientResDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class WeatherCityApi {
 
-    public static String getCityWeatherByAdCode(String cityAdCode, RestTemplate restTemplate){
+    public static LiveWeatherResDto getCityWeatherByAdCode(String cityAdCode, RestTemplate restTemplate){
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(WeatherBaseURL.WEATHER_URL)
                 .queryParam("city", cityAdCode).queryParam("key", WeatherBaseURL.WEATHER_KEY);
         try {
@@ -29,20 +29,17 @@ public class WeatherCityApi {
             ResponseEntity<WeatherClientResDto> forEntity = restTemplate.getForEntity(weatherApiUrl, WeatherClientResDto.class);
             WeatherClientResDto weatherClientResDto = forEntity.getBody();
             if(weatherClientResDto != null && weatherClientResDto.getStatus().equals("1")){
-                List<LiveWeatheResDto> listWeatherResDto = weatherClientResDto.getLives();
+                List<LiveWeatherResDto> listWeatherResDto = weatherClientResDto.getLives();
                 String weather = "";
-                for (LiveWeatheResDto liveWeatheResDto : listWeatherResDto) {
-                     weather = liveWeatheResDto.getWeather();
+                for (LiveWeatherResDto liveWeatherResDto : listWeatherResDto) {
+                    return liveWeatherResDto;
                 }
-                return weather;
             }
-
+            return null;
         }catch (Exception e){
             log.info("weather api exception{}", e.getMessage());
-            return "你若安好，便是晴天";
+            return null;
         }
-        log.info("weather api not response ");
-        return "你若安好，便是晴天";
     }
 
 }

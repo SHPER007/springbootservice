@@ -9,7 +9,7 @@ import lombok.Data;
  * Date:2024/6/23 17:03
  */
 @Data
-public class LiveWeatheResDto {
+public class LiveWeatherResDto {
         private String province;
         private String city;
         private String adcode;

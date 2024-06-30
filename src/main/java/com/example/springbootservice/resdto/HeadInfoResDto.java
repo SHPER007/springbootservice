@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class HeadInfoResDto {
     private String city;
     private String nickName;
-    private String weather;
+    private LiveWeatherResDto liveWeatherRes;
     private String welcome;
-    private LocalDate data;
+    private LocalDate date;
 }
