@@ -18,7 +18,6 @@ public class CorsConfig implements WebMvcConfigurer {
     @Resource
     private LoginInterceptor loginInterceptor;
 
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

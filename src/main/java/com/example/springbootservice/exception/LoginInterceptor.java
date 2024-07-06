@@ -19,20 +19,20 @@ import java.util.Map;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
         String token = request.getHeader("Authorization");
         GenerateJwtUtil generateJwtUtil = new GenerateJwtUtil();
         Map<String, Object> tokenMap = generateJwtUtil.parseToken(token);
-        return true;
-        // 存储token到threadlocal中
-//        ThreadLocalUtil.set(tokenMap);
-//        if (tokenMap == null || tokenMap.isEmpty()) {
-//            response.setStatus(401);
-//            return false;
-//        }
-//        return true;
-
+        if (tokenMap == null || tokenMap.isEmpty()) {
+            response.setStatus(401);
+            return false;
         }
-
+        // 存储token到threadlocal中
+        ThreadLocalUtil.set(tokenMap);
+        return true;
+        }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 //        清空threadloacl中的数据
