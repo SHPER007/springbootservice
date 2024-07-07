@@ -15,5 +15,5 @@ import java.util.List;
 public class UserPlanDto {
     private String chinese;
     private String english;
-    private List<UserPlan> userPlanDto;
+    private List<UserPlan> listPlan;
 }

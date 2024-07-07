@@ -33,7 +33,7 @@ public class UserPlanServiceImpl implements UserPlanService {
             setFormatTime(userPlanList);
             LanguageDto LanguageDto = SuperLanguage.getSuperLanguage();
             UserPlanDto userPlanDto = new UserPlanDto();
-            userPlanDto.setUserPlanDto(userPlanList);
+            userPlanDto.setListPlan(userPlanList);
             userPlanDto.setChinese(LanguageDto.getChinese());
             userPlanDto.setEnglish(LanguageDto.getEnglish());
             return userPlanDto;
@@ -41,8 +41,6 @@ public class UserPlanServiceImpl implements UserPlanService {
         return null;
 
     }
-
-
 
     public void setFormatTime(List<UserPlan> userPlanList){
         for (UserPlan userPlan : userPlanList) {
