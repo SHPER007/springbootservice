@@ -1,7 +1,7 @@
 package com.example.springbootservice;
 
+import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.SubStringUtil;
-import com.example.springbootservice.conf.utils.SuperLanguage;
 import com.example.springbootservice.resdto.HeadInfoResDto;
 import com.example.springbootservice.services.impl.NavInfoServiceImpl;
 import jakarta.annotation.Resource;
@@ -48,8 +48,9 @@ public class SubStringTest{
     }
     @Test
     public void testNumber(){
-        String superLanguage = SuperLanguage.getSuperLanguage();
-        System.out.println(superLanguage);
+        String s = DateFormatUtil.formatDate(1679986800000L);
+        System.out.println(s);
+
     }
 
 

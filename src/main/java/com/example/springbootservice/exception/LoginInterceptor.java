@@ -29,13 +29,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setStatus(401);
             return false;
         }
-        // 存储token到threadlocal中
+        // 存储token到threadLocal中
         ThreadLocalUtil.set(tokenMap);
         return true;
         }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-//        清空threadloacl中的数据
+        //  清空threadLocal中的数据
         ThreadLocalUtil.remove();
     }
 }

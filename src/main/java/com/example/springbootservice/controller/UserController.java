@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * ClassName:LoginControl
  * Package:com.example.springbootservice.control
- * Description:TODO
+ * Description: 用户信息
  * Date:2024/3/30 0030 0:21
  * Author:2498897200@qq.com
  */
@@ -31,12 +31,16 @@ public class UserController {
     @Value("${active.name}")
     private String name;
 
+    /**
+     *Params:[userid]
+     *Return:com.example.springbootservice.response.BaseResponseResult
+     *Description: 返回用户基本信息
+     */
     @GetMapping(value = "/{userid}")
     public BaseResponseResult getUserById(@PathVariable Integer userid){
         User user = userService.getUserByIdWithRoles(userid);
         return BaseResponseResult.success(HttpStatus.OK.value(), "OK", user);
     }
-
     @GetMapping(value = "/test")
     public BaseResponseResult getUserById(){
         return BaseResponseResult.success(HttpStatus.OK.value(), name);

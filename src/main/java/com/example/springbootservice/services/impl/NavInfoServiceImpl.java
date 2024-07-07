@@ -2,7 +2,6 @@ package com.example.springbootservice.services.impl;
 
 import com.example.springbootservice.conf.contants.NavDefaultCity;
 import com.example.springbootservice.conf.utils.SubStringUtil;
-import com.example.springbootservice.conf.utils.SuperLanguage;
 import com.example.springbootservice.mapperdao.NavInfoMapper;
 import com.example.springbootservice.mapperdao.UserMapper;
 import com.example.springbootservice.mysqlbean.User;
@@ -66,7 +65,7 @@ public class NavInfoServiceImpl implements NavInfoService {
         }
         //  设置当前时间
         headInfoResponseDto.setDate(LocalDate.now());
-        headInfoResponseDto.setWelcome(SuperLanguage.getSuperLanguage());
+        headInfoResponseDto.setWelcome("你好好");
         return headInfoResponseDto;
 
 
