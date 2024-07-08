@@ -17,4 +17,17 @@
         where user_plan.userid like #{userid}
     </select>
 
+
+
+    <select id="getCityAdCode" parameterType="java.lang.String" resultType="String">
+        select adcode
+        from cities
+        where cityname like #{cityName}
+    </select>
+
+    <insert id="addUserPlan" parameterType="com.example.springbootservice.mysqlbean.UserPlanBean" >
+        INSERT INTO user_plan (userid,plan_name, start_time, end_time, location, created_at)
+        VALUES (#{userid},#{planName}, #{startTime}, #{endTime}, #{location}, #{createdAt})
+    </insert>
+
 </mapper>

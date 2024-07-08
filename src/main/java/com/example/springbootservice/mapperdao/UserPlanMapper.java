@@ -1,6 +1,7 @@
 package com.example.springbootservice.mapperdao;
 
 import com.example.springbootservice.mysqlbean.UserPlan;
+import com.example.springbootservice.mysqlbean.UserPlanBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,5 @@ import java.util.List;
 public interface UserPlanMapper {
 
     List<UserPlan> getUserPlanList(Integer userId);
+    int addUserPlan(UserPlanBean userPlan);
 }

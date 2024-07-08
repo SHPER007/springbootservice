@@ -2,8 +2,11 @@ package com.example.springbootservice.services.impl;
 
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.SuperLanguage;
+import com.example.springbootservice.conf.utils.ThreadLocalUtil;
 import com.example.springbootservice.mapperdao.UserPlanMapper;
 import com.example.springbootservice.mysqlbean.UserPlan;
+import com.example.springbootservice.mysqlbean.UserPlanBean;
+import com.example.springbootservice.paramdto.UserPlanDtoParam;
 import com.example.springbootservice.resdto.LanguageDto;
 import com.example.springbootservice.resdto.UserPlanDto;
 import com.example.springbootservice.services.UserPlanService;
@@ -11,7 +14,10 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName:UserPlanServiceImpl
@@ -39,6 +45,42 @@ public class UserPlanServiceImpl implements UserPlanService {
             return userPlanDto;
         }
         return null;
+
+    }
+
+    @Override
+    public Boolean addUserPlan(UserPlanDtoParam userPlanDtoParam) {
+        if (userPlanDtoParam == null) {
+            return false;
+        }
+        try {
+            String planName = userPlanDtoParam.getPlanName();
+            OffsetDateTime planDate = userPlanDtoParam.getPlanDate();
+            String location = userPlanDtoParam.getLocation();
+            String endTime = userPlanDtoParam.getEndTime();
+            String startTime = userPlanDtoParam.getStartTime();
+            ArrayList<Long> timestampFromStringTime = DateFormatUtil.getTimestampFromStringTime(planDate, startTime, endTime);
+            UserPlanBean userPlanBean = new UserPlanBean();
+            userPlanBean.setPlanName(planName);
+            userPlanBean.setLocation(location);
+            userPlanBean.setStartTime(timestampFromStringTime.get(0));
+            userPlanBean.setEndTime(timestampFromStringTime.get(1));
+            userPlanBean.setCreatedAt(System.currentTimeMillis());
+
+            Map<String, Object> userinfoMap = ThreadLocalUtil.get();
+            Integer userid = (Integer) userinfoMap.get("id");
+            userPlanBean.setUserid(userid);
+            int i = userPlanMapper.addUserPlan(userPlanBean);
+            if(i>0){
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return false;
+        }
+
+
 
     }
 

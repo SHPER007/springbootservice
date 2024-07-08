@@ -1,5 +1,6 @@
 package com.example.springbootservice.services;
 
+import com.example.springbootservice.paramdto.UserPlanDtoParam;
 import com.example.springbootservice.resdto.UserPlanDto;
 
 /**
@@ -10,4 +11,5 @@ import com.example.springbootservice.resdto.UserPlanDto;
  */
 public interface UserPlanService {
     UserPlanDto getUserPlan(Integer userid);
+    Boolean addUserPlan(UserPlanDtoParam userPlanDtoParam);
 }
