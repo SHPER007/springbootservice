@@ -9,9 +9,6 @@ import com.example.springbootservice.mysqlbean.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,13 +52,8 @@ public class JwtTest {
         Map<String, Object> stringObjectMap = generateJwtUtil.parseToken(s);
         System.out.println(stringObjectMap);
     }
-    @Test
-    public void test(){
-        Instant instant = Instant.ofEpochMilli(System.currentTimeMillis());
-        LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-        System.out.println(localDateTime);
 
-    }
+
 }
 
 

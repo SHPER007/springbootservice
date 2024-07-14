@@ -46,6 +46,24 @@ public class LoginServiceImpl implements LoginService {
             return null;
         }
         // 下发token
+        try{
+            String token = generateJwtUtil.generateToken(userBean);
+            LoginResDto loginResponseDto = new LoginResDto();
+            loginResponseDto.setUserid(userBean.getUserid());
+            loginResponseDto.setToken(token);
+            return loginResponseDto;
+        }catch (Exception e){
+            log.error("生成jwt-token失败");
+            LoginResDto loginResponseDto = new LoginResDto();
+            loginResponseDto.setToken("fail");
+            return loginResponseDto;
+        }
+    }
+
+    @Override
+    public LoginResDto refreshToken(Integer userid) {
+        User userBean = userMapper.getUserByIdWithRoles(userid);
+        // 下发token
         try {
             String token = generateJwtUtil.generateToken(userBean);
             LoginResDto loginResponseDto = new LoginResDto();

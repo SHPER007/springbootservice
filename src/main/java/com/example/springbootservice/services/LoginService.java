@@ -12,4 +12,5 @@ import com.example.springbootservice.resdto.LoginResDto;
 public interface LoginService {
     LoginResDto login(LoginRequestDtoParam loginRequestDtoParam);
 
+    LoginResDto refreshToken(Integer userid);
 }

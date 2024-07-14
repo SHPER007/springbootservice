@@ -24,21 +24,33 @@ public class DateFormatUtil {
         return format;
     }
 
-    public static ArrayList<Long> getTimestampFromStringTime(OffsetDateTime offsetDateTime, String  startTime, String endTime) {
-        LocalDate localDate = offsetDateTime.toLocalDate();
-        // 创建开始时间和结束时间
-        LocalTime startTimeLocal = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
-        LocalTime endTimeLocal = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
-        // 合并日期和时间
-        LocalDateTime startDateTime = LocalDateTime.of(localDate, startTimeLocal);
-        LocalDateTime endDateTime = LocalDateTime.of(localDate, endTimeLocal);
+    public static ArrayList<Long> getTimestampFromStringTime(OffsetDateTime offsetDateTime, String  localStartTime, String localEndTime) {
 
-        // 转换为UTC的ZonedDateTime
-        ZonedDateTime utcStartDateTime = startDateTime.atZone(ZoneOffset.UTC);
-        ZonedDateTime utcEndDateTime = endDateTime.atZone(ZoneOffset.UTC);
-        // 转换为UTC时间戳
-        long startTimeStamp = utcStartDateTime.toInstant().toEpochMilli();
-        long endTimeStamp = utcEndDateTime.toInstant().toEpochMilli();
+        ZoneId userTimeZone = ZoneId.of("Asia/Shanghai"); // 东八区
+
+        // 直接使用已有的OffsetDateTime对象 获取用户时区的ZonedDateTime
+        ZonedDateTime userZonedDateTime = offsetDateTime.atZoneSameInstant(userTimeZone);
+
+        // 获取用户时区的日期
+        LocalDate userDate = userZonedDateTime.toLocalDate();
+
+        // 解析本地时间字符串
+
+        LocalTime startTimeObj = LocalTime.parse(localStartTime, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime endTime0bj = LocalTime.parse(localEndTime, DateTimeFormatter.ofPattern("HH:mm"));
+
+        // 创建LocalDateTime结合用户时区的日期和本地时间
+        LocalDateTime userLocalStartDateTime = LocalDateTime.of(userDate, startTimeObj);
+        LocalDateTime userLocalEndDateTime = LocalDateTime.of(userDate, endTime0bj);
+
+        // 将LocalDateTime与用户时区结合
+        ZonedDateTime zonedStartDateTime = userLocalStartDateTime.atZone(userTimeZone);
+        ZonedDateTime zonedEndDateTime = userLocalEndDateTime.atZone(userTimeZone);
+
+        // 将ZonedDateTime转换为UTC的Instant
+        Long startTimeStamp = zonedStartDateTime.withZoneSameInstant(ZoneOffset.UTC).toInstant().toEpochMilli();
+        Long endTimeStamp = zonedEndDateTime.withZoneSameInstant(ZoneOffset.UTC).toInstant().toEpochMilli();
+
         ArrayList<Long> timeStampList = new ArrayList<>();
         timeStampList.add(startTimeStamp);
         timeStampList.add(endTimeStamp);
