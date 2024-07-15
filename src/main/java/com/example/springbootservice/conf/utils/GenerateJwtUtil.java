@@ -30,28 +30,36 @@ public class GenerateJwtUtil {
     private String secret;
 
     @Value("${jwt.expiresMs}")
-    private int expiresMs;
+    private Long expiresMs;
 
     public String generateToken(User user) {
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("id", user.getUserid());
         userMap.put("name",user.getNickName());
+        System.out.println(expiresMs);
         String token = JWT.create()
-                .withClaim("userMapKey", userMap)
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000*60*60*12))
-                .sign(Algorithm.HMAC256("secreter"));
+                .withClaim(userInfoKey, userMap)
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiresMs))
+                .sign(Algorithm.HMAC256(secret));
         return token;
     }
 
     public Map<String, Object> parseToken(String token) {
         //定义字符串模拟用户传递过来的token
         try {
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256("secreter")).build().verify(token);
+            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
             Map<String, Claim> claims = decodedJWT.getClaims();
-            return claims.get("userMapKey").asMap();
+            return claims.get(userInfoKey).asMap();
         }catch (Exception e){
             log.info("解析token异常{}", e.getMessage());
             return null;
         }
+    }
+    public Integer getUserIdFromToken(String token) {
+        Map<String, Object> userTokenMap = parseToken(token);
+        if (userTokenMap != null){
+            return (Integer) userTokenMap.get("id");
+        }
+        throw new RuntimeException("parse userid exception");
     }
 }

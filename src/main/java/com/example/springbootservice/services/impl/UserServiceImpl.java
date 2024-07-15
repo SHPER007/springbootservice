@@ -1,12 +1,11 @@
 package com.example.springbootservice.services.impl;
 
+import com.example.springbootservice.conf.utils.ThreadLocalUtil;
 import com.example.springbootservice.mapperdao.UserMapper;
 import com.example.springbootservice.mysqlbean.User;
 import com.example.springbootservice.services.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * ClassName:UserServiceImpl
@@ -23,17 +22,8 @@ public class UserServiceImpl implements UserService{
     UserMapper userMapper;
 
     @Override
-    public User getUserByIdWithRoles(Integer userId) {
+    public User getUserByIdWithRoles() {
+        Integer userId = ThreadLocalUtil.get();
         return userMapper.getUserByIdWithRoles(userId);
-    }
-
-    @Override
-    public List<User> userList() {
-        return null;
-    }
-
-    @Override
-    public List<User> pageUserList() {
-        return null;
     }
 }

@@ -56,6 +56,7 @@ public class SubStringTest{
 
     @Test
     public void testSubString(){
-        HeadInfoResDto headInfoByUserId = navInfoService.getHeadInfoByUserId(Integer.valueOf("10010"));
+        HeadInfoResDto headInfoByUserId = navInfoService.getHeadInfoByUserId();
+
     }
 }

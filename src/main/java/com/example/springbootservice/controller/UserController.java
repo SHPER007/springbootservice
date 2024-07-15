@@ -36,13 +36,9 @@ public class UserController {
      *Return:com.example.springbootservice.response.BaseResponseResult
      *Description: 返回用户基本信息
      */
-    @GetMapping(value = "/{userid}")
-    public BaseResponseResult getUserById(@PathVariable Integer userid){
-        User user = userService.getUserByIdWithRoles(userid);
-        return BaseResponseResult.success(HttpStatus.OK.value(), "OK", user);
-    }
-    @GetMapping(value = "/test")
+    @GetMapping(value = "/info")
     public BaseResponseResult getUserById(){
-        return BaseResponseResult.success(HttpStatus.OK.value(), name);
+        User user = userService.getUserByIdWithRoles();
+        return BaseResponseResult.success(HttpStatus.OK.value(), "OK", user);
     }
 }

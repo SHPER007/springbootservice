@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @Slf4j
-@RequestMapping("/plan")
+@RequestMapping("/userplan")
 public class UserPlanController {
     @Resource
     private UserPlanService userPlanService;
 
-    @GetMapping("/{userid}")
-    public BaseResponseResult getUserPlan(@PathVariable Integer userid) {
-        UserPlanDto userPlanDto = userPlanService.getUserPlan(userid);
+    @GetMapping()
+    public BaseResponseResult getUserPlan() {
+        UserPlanDto userPlanDto = userPlanService.getUserPlan();
         if (userPlanDto == null) {
             return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),ResponseCode.USER_DATA_IS_NULL.getDescription());
         }

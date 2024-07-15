@@ -10,6 +10,6 @@ import com.example.springbootservice.resdto.UserPlanDto;
  * Date:2024/7/7 17:45
  */
 public interface UserPlanService {
-    UserPlanDto getUserPlan(Integer userid);
+    UserPlanDto getUserPlan();
     Boolean addUserPlan(UserPlanDtoParam userPlanDtoParam);
 }

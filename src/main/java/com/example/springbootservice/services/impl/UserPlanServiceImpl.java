@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * ClassName:UserPlanServiceImpl
@@ -33,9 +32,10 @@ public class UserPlanServiceImpl implements UserPlanService {
     UserPlanMapper userPlanMapper;
 
     @Override
-    public UserPlanDto getUserPlan(Integer userId) {
-        List<UserPlan> userPlanList = userPlanMapper.getUserPlanList(userId);
-        if(userPlanList.size()>0){
+    public UserPlanDto getUserPlan() {
+        Integer userid= ThreadLocalUtil.get();
+        List<UserPlan> userPlanList = userPlanMapper.getUserPlanList(userid);
+        if(!userPlanList.isEmpty()){
             setFormatTime(userPlanList);
             LanguageDto LanguageDto = SuperLanguage.getSuperLanguage();
             UserPlanDto userPlanDto = new UserPlanDto();
@@ -67,21 +67,17 @@ public class UserPlanServiceImpl implements UserPlanService {
             userPlanBean.setEndTime(timestampFromStringTime.get(1));
             userPlanBean.setCreatedAt(System.currentTimeMillis());
 
-            Map<String, Object> userinfoMap = ThreadLocalUtil.get();
-            Integer userid = (Integer) userinfoMap.get("id");
+            Integer userid = ThreadLocalUtil.get();
             userPlanBean.setUserid(userid);
             int i = userPlanMapper.addUserPlan(userPlanBean);
-            if(i>0){
-                return true;
+            if(i < 0){
+                log.info("creat UserPlan fail");
             }
-            return false;
+            return i > 0;
         }catch (Exception e){
             log.error(e.getMessage());
             return false;
         }
-
-
-
     }
 
     public void setFormatTime(List<UserPlan> userPlanList){

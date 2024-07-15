@@ -2,6 +2,7 @@ package com.example.springbootservice.exception;
 
 import com.example.springbootservice.conf.utils.GenerateJwtUtil;
 import com.example.springbootservice.conf.utils.ThreadLocalUtil;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,8 @@ import java.util.Map;
  */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
+    @Resource
+    GenerateJwtUtil generateJwtUtil;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
@@ -27,14 +30,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("Authorization");
-        GenerateJwtUtil generateJwtUtil = new GenerateJwtUtil();
         Map<String, Object> tokenMap = generateJwtUtil.parseToken(token);
         if (tokenMap == null || tokenMap.isEmpty()) {
             response.setStatus(401);
             return false;
         }
-        // 存储token到threadLocal中
-        ThreadLocalUtil.set(tokenMap);
+        // 存储token到threadLocal中  存userid到ThreadLocalUtil中
+        ThreadLocalUtil.set(generateJwtUtil.getUserIdFromToken(token));
         return true;
         }
     @Override

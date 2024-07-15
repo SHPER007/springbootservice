@@ -13,7 +13,5 @@ import java.util.List;
  */
 
 public interface UserService {
-    User getUserByIdWithRoles(Integer userId);
-    List<User> userList();
-    List<User> pageUserList();
+    User getUserByIdWithRoles();
 }

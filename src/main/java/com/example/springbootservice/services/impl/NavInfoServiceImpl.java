@@ -2,6 +2,7 @@ package com.example.springbootservice.services.impl;
 
 import com.example.springbootservice.conf.contants.NavDefaultCity;
 import com.example.springbootservice.conf.utils.SubStringUtil;
+import com.example.springbootservice.conf.utils.ThreadLocalUtil;
 import com.example.springbootservice.mapperdao.NavInfoMapper;
 import com.example.springbootservice.mapperdao.UserMapper;
 import com.example.springbootservice.mysqlbean.User;
@@ -32,7 +33,8 @@ public class NavInfoServiceImpl implements NavInfoService {
     @Resource
     UserMapper userMapper;
     @Override
-    public HeadInfoResDto getHeadInfoByUserId(Integer userid) {
+    public HeadInfoResDto getHeadInfoByUserId() {
+        Integer userid = ThreadLocalUtil.get();
         User user = userMapper.getUserByIdWithRoles(userid);
         log.info(user.toString());
         HeadInfoResDto headInfoResponseDto = new HeadInfoResDto();

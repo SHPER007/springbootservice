@@ -11,5 +11,5 @@ import com.example.springbootservice.resdto.HeadInfoResDto;
 
 public interface NavInfoService {
 
-    HeadInfoResDto getHeadInfoByUserId(Integer userid);
+    HeadInfoResDto getHeadInfoByUserId();
 }

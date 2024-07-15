@@ -7,7 +7,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,9 +24,9 @@ public class NavInfoController {
     @Resource
     private NavInfoService navHeadInfoService;
 
-    @GetMapping(value = "/{userid}")
-    public BaseResponseResult getHeadInfoByUserId(@PathVariable Integer userid){
-        HeadInfoResDto headInfoResponseDto = navHeadInfoService.getHeadInfoByUserId(userid);
+    @GetMapping(value = "/info")
+    public BaseResponseResult getHeadInfoByUserId(){
+        HeadInfoResDto headInfoResponseDto = navHeadInfoService.getHeadInfoByUserId();
         log.info("navinfo res data:{}",headInfoResponseDto.toString());
         return BaseResponseResult.success(HttpStatus.OK.value(), "OK", headInfoResponseDto);
     }
