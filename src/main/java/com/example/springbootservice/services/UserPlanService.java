@@ -1,7 +1,7 @@
 package com.example.springbootservice.services;
 
-import com.example.springbootservice.paramdto.UserPlanDtoParam;
-import com.example.springbootservice.resdto.UserPlanDto;
+import com.example.springbootservice.domain.params.UserPlanDtoParam;
+import com.example.springbootservice.domain.responsevo.UserPlanDtoVo;
 
 /**
  * ClassName:UserPlanService
@@ -10,6 +10,6 @@ import com.example.springbootservice.resdto.UserPlanDto;
  * Date:2024/7/7 17:45
  */
 public interface UserPlanService {
-    UserPlanDto getUserPlan();
+    UserPlanDtoVo getUserPlan();
     Boolean addUserPlan(UserPlanDtoParam userPlanDtoParam);
 }

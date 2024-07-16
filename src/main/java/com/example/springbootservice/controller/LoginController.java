@@ -1,8 +1,8 @@
 package com.example.springbootservice.controller;
 
-import com.example.springbootservice.paramdto.LoginRequestDtoParam;
-import com.example.springbootservice.resdto.LoginResDto;
-import com.example.springbootservice.response.BaseResponseResult;
+import com.example.springbootservice.domain.params.LoginParam;
+import com.example.springbootservice.domain.responsevo.LoginResVo;
+import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.LoginService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +28,8 @@ public class LoginController {
     *Description: token下发接口
     */
     @PostMapping("login")
-    public BaseResponseResult login(@RequestBody LoginRequestDtoParam loginRequestDtoParam) {
-        LoginResDto loginResponseDto = loginService.login(loginRequestDtoParam);
+    public BaseResponseResult login(@RequestBody LoginParam loginParam) {
+        LoginResVo loginResponseDto = loginService.login(loginParam);
         if (loginResponseDto == null) {
             return BaseResponseResult.fail(HttpStatus.BAD_REQUEST.value(),"账号与密码不匹配，请重新输入");
         } else if (("fail").equals(loginResponseDto.getToken())) {
@@ -41,8 +41,8 @@ public class LoginController {
 
     @GetMapping("refreshToken")
     public BaseResponseResult refreshToken(@RequestParam Integer userid ) {
-        LoginResDto loginResDto = loginService.refreshToken(userid);
-        return BaseResponseResult.success(HttpStatus.OK.value(),"OK", loginResDto);
+        LoginResVo loginResVo = loginService.refreshToken(userid);
+        return BaseResponseResult.success(HttpStatus.OK.value(),"OK", loginResVo);
     }
 }
 

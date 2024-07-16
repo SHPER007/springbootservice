@@ -4,8 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.springbootservice.conf.utils.GenerateJwtUtil;
-import com.example.springbootservice.mysqlbean.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -40,17 +38,6 @@ public class JwtTest {
         Map<String, Claim> claims = decodedJWT.getClaims();
         Map<String, Object> user = claims.get("user").asMap();
         System.out.println(user);
-    }
-
-    @Test
-    public void verifyToken() {
-        GenerateJwtUtil generateJwtUtil = new GenerateJwtUtil();
-        User user = new User(1,"123");
-        System.out.println(user.getNickName());
-        String s = generateJwtUtil.generateToken(user);
-        System.out.println(s);
-        Map<String, Object> stringObjectMap = generateJwtUtil.parseToken(s);
-        System.out.println(stringObjectMap);
     }
 
 

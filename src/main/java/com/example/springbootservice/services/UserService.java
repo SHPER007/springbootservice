@@ -1,8 +1,6 @@
 package com.example.springbootservice.services;
 
-import com.example.springbootservice.mysqlbean.User;
-
-import java.util.List;
+import com.example.springbootservice.domain.po.User;
 
 /**
  * ClassName:UserService

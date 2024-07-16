@@ -1,7 +1,7 @@
 package com.example.springbootservice.controller;
 
-import com.example.springbootservice.mysqlbean.User;
-import com.example.springbootservice.response.BaseResponseResult;
+import com.example.springbootservice.domain.po.User;
+import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

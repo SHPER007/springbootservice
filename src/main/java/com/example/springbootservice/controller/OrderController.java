@@ -1,9 +1,9 @@
 package com.example.springbootservice.controller;
 
-import com.example.springbootservice.paramdto.OrderCreatParam;
-import com.example.springbootservice.paramdto.UserDtoParam;
-import com.example.springbootservice.paramdto.UserOrderDtoParam;
-import com.example.springbootservice.response.BaseResponseResult;
+import com.example.springbootservice.domain.params.OrderCreatQuery;
+import com.example.springbootservice.domain.params.UserParamQuery;
+import com.example.springbootservice.domain.params.UserOrderParam;
+import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.OrderService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -27,10 +27,10 @@ public class OrderController {
     @Resource
     OrderService orderService;
     @RequestMapping("/order")
-    public BaseResponseResult creatOrder(@RequestBody @Valid UserOrderDtoParam userOrderDtoParam){
-        UserDtoParam userDtoParam = userOrderDtoParam.getUserDtoParam();
-        OrderCreatParam orderCreatParam = userOrderDtoParam.getOrderCreatParam();
-        boolean orderResult = orderService.creatOrder(userDtoParam, orderCreatParam);
+    public BaseResponseResult creatOrder(@RequestBody @Valid UserOrderParam userOrderParam){
+        UserParamQuery userParamQuery = userOrderParam.getUserParamQuery();
+        OrderCreatQuery orderCreatParam = userOrderParam.getOrderCreatParam();
+        boolean orderResult = orderService.creatOrder(userParamQuery, orderCreatParam);
         if (!orderResult){
             return BaseResponseResult.fail(HttpStatus.BAD_REQUEST.value(),"下单失败");
         }

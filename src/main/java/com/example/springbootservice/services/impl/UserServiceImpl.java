@@ -1,8 +1,8 @@
 package com.example.springbootservice.services.impl;
 
 import com.example.springbootservice.conf.utils.ThreadLocalUtil;
-import com.example.springbootservice.mapperdao.UserMapper;
-import com.example.springbootservice.mysqlbean.User;
+import com.example.springbootservice.mapper.UserMapper;
+import com.example.springbootservice.domain.po.User;
 import com.example.springbootservice.services.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

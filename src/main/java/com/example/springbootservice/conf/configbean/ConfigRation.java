@@ -1,7 +1,7 @@
 package com.example.springbootservice.conf.configbean;
 
 import com.example.springbootservice.conf.utils.RedisLockUtil;
-import com.example.springbootservice.filter.TraceIdFilter;
+import com.example.springbootservice.conf.filter.TraceIdFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

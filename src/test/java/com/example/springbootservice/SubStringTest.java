@@ -2,7 +2,7 @@ package com.example.springbootservice;
 
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.SubStringUtil;
-import com.example.springbootservice.resdto.HeadInfoResDto;
+import com.example.springbootservice.domain.responsevo.HeadInfoResVo;
 import com.example.springbootservice.services.impl.NavInfoServiceImpl;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -51,12 +51,13 @@ public class SubStringTest{
         String s = DateFormatUtil.formatDate(1679986800000L);
         System.out.println(s);
 
+
     }
 
 
     @Test
     public void testSubString(){
-        HeadInfoResDto headInfoByUserId = navInfoService.getHeadInfoByUserId();
+        HeadInfoResVo headInfoByUserId = navInfoService.getHeadInfoByUserId();
 
     }
 }

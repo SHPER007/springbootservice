@@ -1,6 +1,6 @@
 package com.example.springbootservice.conf.configbean;
 
-import com.example.springbootservice.exception.LoginInterceptor;
+import com.example.springbootservice.conf.filter.LoginInterceptor;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

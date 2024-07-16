@@ -1,6 +1,6 @@
 package com.example.springbootservice.services;
 
-import com.example.springbootservice.resdto.HeadInfoResDto;
+import com.example.springbootservice.domain.responsevo.HeadInfoResVo;
 
 /**
  * ClassName:NavHeadInfoService
@@ -11,5 +11,5 @@ import com.example.springbootservice.resdto.HeadInfoResDto;
 
 public interface NavInfoService {
 
-    HeadInfoResDto getHeadInfoByUserId();
+    HeadInfoResVo getHeadInfoByUserId();
 }

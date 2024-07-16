@@ -1,9 +1,9 @@
 package com.example.springbootservice.controller;
 
 import com.example.springbootservice.conf.enums.ResponseCode;
-import com.example.springbootservice.paramdto.UserPlanDtoParam;
-import com.example.springbootservice.resdto.UserPlanDto;
-import com.example.springbootservice.response.BaseResponseResult;
+import com.example.springbootservice.domain.params.UserPlanDtoParam;
+import com.example.springbootservice.domain.responsevo.UserPlanDtoVo;
+import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.UserPlanService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +25,11 @@ public class UserPlanController {
 
     @GetMapping()
     public BaseResponseResult getUserPlan() {
-        UserPlanDto userPlanDto = userPlanService.getUserPlan();
-        if (userPlanDto == null) {
+        UserPlanDtoVo userPlanDtoVo = userPlanService.getUserPlan();
+        if (userPlanDtoVo == null) {
             return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),ResponseCode.USER_DATA_IS_NULL.getDescription());
         }
-        return BaseResponseResult.success(HttpStatus.OK.value(), "200",userPlanDto);
+        return BaseResponseResult.success(HttpStatus.OK.value(), "200", userPlanDtoVo);
     }
 
     @PostMapping("/creat")

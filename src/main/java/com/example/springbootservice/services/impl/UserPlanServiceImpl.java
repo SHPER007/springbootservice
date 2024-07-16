@@ -3,12 +3,12 @@ package com.example.springbootservice.services.impl;
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.SuperLanguage;
 import com.example.springbootservice.conf.utils.ThreadLocalUtil;
-import com.example.springbootservice.mapperdao.UserPlanMapper;
-import com.example.springbootservice.mysqlbean.UserPlan;
-import com.example.springbootservice.mysqlbean.UserPlanBean;
-import com.example.springbootservice.paramdto.UserPlanDtoParam;
-import com.example.springbootservice.resdto.LanguageDto;
-import com.example.springbootservice.resdto.UserPlanDto;
+import com.example.springbootservice.mapper.UserPlanMapper;
+import com.example.springbootservice.domain.po.UserPlan;
+import com.example.springbootservice.domain.po.UserPlanBean;
+import com.example.springbootservice.domain.params.UserPlanDtoParam;
+import com.example.springbootservice.domain.responsevo.LanguageVoDto;
+import com.example.springbootservice.domain.responsevo.UserPlanDtoVo;
 import com.example.springbootservice.services.UserPlanService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -32,17 +32,17 @@ public class UserPlanServiceImpl implements UserPlanService {
     UserPlanMapper userPlanMapper;
 
     @Override
-    public UserPlanDto getUserPlan() {
+    public UserPlanDtoVo getUserPlan() {
         Integer userid= ThreadLocalUtil.get();
         List<UserPlan> userPlanList = userPlanMapper.getUserPlanList(userid);
         if(!userPlanList.isEmpty()){
             setFormatTime(userPlanList);
-            LanguageDto LanguageDto = SuperLanguage.getSuperLanguage();
-            UserPlanDto userPlanDto = new UserPlanDto();
-            userPlanDto.setListPlan(userPlanList);
-            userPlanDto.setChinese(LanguageDto.getChinese());
-            userPlanDto.setEnglish(LanguageDto.getEnglish());
-            return userPlanDto;
+            LanguageVoDto LanguageVoDto = SuperLanguage.getSuperLanguage();
+            UserPlanDtoVo userPlanDtoVo = new UserPlanDtoVo();
+            userPlanDtoVo.setListPlan(userPlanList);
+            userPlanDtoVo.setChinese(LanguageVoDto.getChinese());
+            userPlanDtoVo.setEnglish(LanguageVoDto.getEnglish());
+            return userPlanDtoVo;
         }
         return null;
 
