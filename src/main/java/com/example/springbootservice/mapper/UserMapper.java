@@ -27,7 +27,7 @@ public interface UserMapper {
      *Description:查询所有
      */
     List<User> getAllUserList();
-
+    User getUserById(Integer userId);
     List<User> pageUserList();
 
 

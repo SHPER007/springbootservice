@@ -12,7 +12,7 @@
         <result property="password" column="password"/>
         <!-- 处理多对多关系，假设User类中有一个List<Role> roles属性 -->
         <collection property="roles" ofType="Role">
-            <result property="id" column="role_id"/>
+            <result property="id" column="id"/>
             <result property="role" column="role"/>
             <!-- 其他Role属性映射... -->
         </collection>
