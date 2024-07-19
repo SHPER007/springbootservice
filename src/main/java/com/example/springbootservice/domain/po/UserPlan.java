@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserPlan {
     private Integer id;
+    private Integer userid;
     private String planName;
     private String startTime;
     private String endTime;

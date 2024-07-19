@@ -11,10 +11,10 @@ import java.time.LocalDate;
  * Date:2024/6/23 14:14
  */
 @Data
-public class HeadInfoResVo {
+public class HeadInfoResDto {
     private String city;
     private String nickName;
-    private LiveWeatherResVoDto liveWeatherRes;
+    private LiveWeatherVo liveWeatherRes;
     private String welcome;
     private LocalDate date;
 }

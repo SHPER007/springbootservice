@@ -1,6 +1,6 @@
 package com.example.springbootservice.controller;
 
-import com.example.springbootservice.domain.responsevo.HeadInfoResVo;
+import com.example.springbootservice.domain.responsevo.HeadInfoResDto;
 import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.NavInfoService;
 import jakarta.annotation.Resource;
@@ -26,8 +26,13 @@ public class NavInfoController {
 
     @GetMapping(value = "/info")
     public BaseResponseResult getHeadInfoByUserId(){
-        HeadInfoResVo headInfoResponseDto = navHeadInfoService.getHeadInfoByUserId();
-        log.info("navinfo res data:{}",headInfoResponseDto.toString());
-        return BaseResponseResult.success(HttpStatus.OK.value(), "OK", headInfoResponseDto);
+        try {
+            HeadInfoResDto headInfoResponseDto = navHeadInfoService.getHeadInfoByUserId();
+            return BaseResponseResult.success(HttpStatus.OK.value(), "OK", headInfoResponseDto);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return BaseResponseResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+        }
+
     }
 }

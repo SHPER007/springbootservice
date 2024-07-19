@@ -17,7 +17,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserPlanMapper extends BaseMapper<UserPlan> {
-
-    List<UserPlan> getUserPlanList(Integer userId);
+    List<UserPlan> getUserPlanList(Integer userId,long startTimestamp,long endTimestamp);
     int addUserPlan(UserPlanBean userPlan);
+
 }

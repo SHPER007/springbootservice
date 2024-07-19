@@ -9,11 +9,11 @@ import lombok.Data;
  * Date:2024/7/7 23:38
  */
 @Data
-public class LanguageVoDto {
+public class LanguageVo {
     private String chinese;
     private String english;
 
-    public LanguageVoDto(String chinese, String english){
+    public LanguageVo(String chinese, String english){
         this.chinese = chinese;
         this.english = english;
 

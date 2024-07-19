@@ -4,7 +4,7 @@ import com.example.springbootservice.conf.utils.GenerateJwtUtil;
 import com.example.springbootservice.mapper.UserMapper;
 import com.example.springbootservice.domain.po.User;
 import com.example.springbootservice.domain.params.LoginParam;
-import com.example.springbootservice.domain.responsevo.LoginResVo;
+import com.example.springbootservice.domain.responsevo.LoginResDto;
 import com.example.springbootservice.services.LoginService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     GenerateJwtUtil generateJwtUtil;
     
-    public LoginResVo login(LoginParam loginParam) {
+    public LoginResDto login(LoginParam loginParam) {
         Integer userid = loginParam.getUserid();
         String userInputPassword = loginParam.getPassword();
         if (userid == null || userInputPassword == null  || userInputPassword.isBlank()) {
@@ -48,31 +48,31 @@ public class LoginServiceImpl implements LoginService {
         // 下发token
         try{
             String token = generateJwtUtil.generateToken(userBean);
-            LoginResVo loginResponseDto = new LoginResVo();
+            LoginResDto loginResponseDto = new LoginResDto();
             loginResponseDto.setUserid(userBean.getUserid());
             loginResponseDto.setToken(token);
             return loginResponseDto;
         }catch (Exception e){
             log.error("生成jwt-token失败");
-            LoginResVo loginResponseDto = new LoginResVo();
+            LoginResDto loginResponseDto = new LoginResDto();
             loginResponseDto.setToken("fail");
             return loginResponseDto;
         }
     }
 
     @Override
-    public LoginResVo refreshToken(Integer userid) {
+    public LoginResDto refreshToken(Integer userid) {
         User userBean = userMapper.getUserByIdWithRoles(userid);
         // 下发token
         try {
             String token = generateJwtUtil.generateToken(userBean);
-            LoginResVo loginResponseDto = new LoginResVo();
+            LoginResDto loginResponseDto = new LoginResDto();
             loginResponseDto.setUserid(userBean.getUserid());
             loginResponseDto.setToken(token);
             return loginResponseDto;
         }catch (Exception e){
             log.error("生成jwt-token失败");
-            LoginResVo loginResponseDto = new LoginResVo();
+            LoginResDto loginResponseDto = new LoginResDto();
             loginResponseDto.setToken("fail");
             return loginResponseDto;
         }

@@ -1,6 +1,10 @@
 package com.example.springbootservice.domain.responsevo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * ClassName:LiveWeather
@@ -9,7 +13,9 @@ import lombok.Data;
  * Date:2024/6/23 17:03
  */
 @Data
-public class LiveWeatherResVoDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class LiveWeatherVo implements Serializable {
         private String province;
         private String city;
         private String adcode;

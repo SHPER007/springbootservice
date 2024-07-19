@@ -9,4 +9,5 @@ package com.example.springbootservice.conf.contants;
  */
 public class RedisExpire {
     public static final Long EXPIRE_TIME = 50000L;
+    public static final Long CACHE_WEATHER_EXPIRE_TIME = 10800L;
 }

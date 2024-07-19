@@ -1,7 +1,7 @@
 package com.example.springbootservice.conf.resfulapi;
 
 import com.example.springbootservice.conf.contants.WeatherBaseURL;
-import com.example.springbootservice.domain.responsevo.LiveWeatherResVoDto;
+import com.example.springbootservice.domain.responsevo.LiveWeatherVo;
 import com.example.springbootservice.domain.responsevo.WeatherClientResVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class WeatherCityApi {
 
-    public static LiveWeatherResVoDto getCityWeatherByAdCode(String cityAdCode, RestTemplate restTemplate){
+    public static LiveWeatherVo getCityWeatherByAdCode(String cityAdCode, RestTemplate restTemplate){
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(WeatherBaseURL.WEATHER_URL)
                 .queryParam("city", cityAdCode).queryParam("key", WeatherBaseURL.WEATHER_KEY);
         try {
@@ -28,10 +28,10 @@ public class WeatherCityApi {
             ResponseEntity<WeatherClientResVo> forEntity = restTemplate.getForEntity(weatherApiUrl, WeatherClientResVo.class);
             WeatherClientResVo weatherClientResVo = forEntity.getBody();
             if(weatherClientResVo != null && weatherClientResVo.getStatus().equals("1")){
-                List<LiveWeatherResVoDto> listWeatherResDto = weatherClientResVo.getLives();
+                List<LiveWeatherVo> listWeatherResDto = weatherClientResVo.getLives();
                 String weather = "";
-                for (LiveWeatherResVoDto liveWeatherResVoDto : listWeatherResDto) {
-                    return liveWeatherResVoDto;
+                for (LiveWeatherVo liveWeatherVo : listWeatherResDto) {
+                    return liveWeatherVo;
                 }
             }
             return null;

@@ -30,12 +30,10 @@ public class TraceIdFilter implements Filter {
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
             String gateWayIsHaveTracId = httpServletRequest.getHeader(GenerateTraceIdUtil.TRACE_ID_KEY);
             GenerateTraceIdUtil.generateTracIdToMdc(gateWayIsHaveTracId);
-            log.info("设置traceId");
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
             log.info("设置traceId的过滤器中出现异常{}", e.toString());
         } finally {
-            log.info("移除traceId");
             GenerateTraceIdUtil.removeTraceId();
 
         }

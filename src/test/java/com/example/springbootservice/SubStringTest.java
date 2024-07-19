@@ -2,7 +2,7 @@ package com.example.springbootservice;
 
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.SubStringUtil;
-import com.example.springbootservice.domain.responsevo.HeadInfoResVo;
+import com.example.springbootservice.domain.responsevo.HeadInfoResDto;
 import com.example.springbootservice.services.impl.NavInfoServiceImpl;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ public class SubStringTest{
 
     @Test
     public void testSubString(){
-        HeadInfoResVo headInfoByUserId = navInfoService.getHeadInfoByUserId();
+        HeadInfoResDto headInfoByUserId = navInfoService.getHeadInfoByUserId();
 
     }
 }

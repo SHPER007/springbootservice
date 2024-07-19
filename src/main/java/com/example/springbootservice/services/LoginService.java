@@ -1,7 +1,7 @@
 package com.example.springbootservice.services;
 
 import com.example.springbootservice.domain.params.LoginParam;
-import com.example.springbootservice.domain.responsevo.LoginResVo;
+import com.example.springbootservice.domain.responsevo.LoginResDto;
 
 /**
  * ClassName:LoginService
@@ -10,7 +10,7 @@ import com.example.springbootservice.domain.responsevo.LoginResVo;
  * Date:2024/6/16 14:37
  */
 public interface LoginService {
-    LoginResVo login(LoginParam loginParam);
+    LoginResDto login(LoginParam loginParam);
 
-    LoginResVo refreshToken(Integer userid);
+    LoginResDto refreshToken(Integer userid);
 }

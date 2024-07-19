@@ -12,7 +12,7 @@ import java.util.List;
  * Date:2024/7/7 18:03
  */
 @Data
-public class UserPlanDtoVo {
+public class UserPlanResDto {
     private String chinese;
     private String english;
     private List<UserPlan> listPlan;

@@ -2,7 +2,7 @@ package com.example.springbootservice.controller;
 
 import com.example.springbootservice.conf.enums.ResponseCode;
 import com.example.springbootservice.domain.params.UserPlanDtoParam;
-import com.example.springbootservice.domain.responsevo.UserPlanDtoVo;
+import com.example.springbootservice.domain.responsevo.UserPlanResDto;
 import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.UserPlanService;
 import jakarta.annotation.Resource;
@@ -25,11 +25,12 @@ public class UserPlanController {
 
     @GetMapping()
     public BaseResponseResult getUserPlan() {
-        UserPlanDtoVo userPlanDtoVo = userPlanService.getUserPlan();
-        if (userPlanDtoVo == null) {
+        UserPlanResDto userPlanResDtoVo = userPlanService.getUserPlan();
+        if (userPlanResDtoVo == null) {
             return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),ResponseCode.USER_DATA_IS_NULL.getDescription());
         }
-        return BaseResponseResult.success(HttpStatus.OK.value(), "200", userPlanDtoVo);
+        log.info("head info res data:{}", userPlanResDtoVo.toString());
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), userPlanResDtoVo);
     }
 
     @PostMapping("/creat")
@@ -38,8 +39,18 @@ public class UserPlanController {
         if (addUserPlanResult) {
             return BaseResponseResult.success(HttpStatus.OK.value(), "200");
         }else {
-            return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),"200");
+            return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),HttpStatus.OK.getReasonPhrase());
         }
     }
 
+
+    @DeleteMapping("/clear")
+    public BaseResponseResult clearUserPlan() {
+        Boolean clearUsePlanResult = userPlanService.clearUserPlanForToday();
+        if (clearUsePlanResult){
+            return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase());
+        }else {
+            return BaseResponseResult.fail(ResponseCode.DELETE_SOURCE_FAILED.getValue(),ResponseCode.DELETE_SOURCE_FAILED.getDescription());
+        }
+    }
 }

@@ -16,6 +16,6 @@ public class WeatherClientResVo {
     private String count;
     private String info;
     private String infocode;
-    private List<LiveWeatherResVoDto> lives;
+    private List<LiveWeatherVo> lives;
 
 }
