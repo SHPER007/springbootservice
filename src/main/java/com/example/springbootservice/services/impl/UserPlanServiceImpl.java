@@ -66,7 +66,7 @@ public class UserPlanServiceImpl implements UserPlanService {
      */
 
     @Override
-    public Boolean addUserPlan(UserPlanDtoParam userPlanDtoParam) {
+    public Boolean createUserPlan(UserPlanDtoParam userPlanDtoParam) {
         if (userPlanDtoParam == null) {
             return false;
         }
@@ -86,7 +86,7 @@ public class UserPlanServiceImpl implements UserPlanService {
 
             Integer userid = ThreadLocalUtil.get();
             userPlanBean.setUserid(userid);
-            int i = userPlanMapper.addUserPlan(userPlanBean);
+            int i = userPlanMapper.createUserPlan(userPlanBean);
             if(i < 0){
                 log.info("creat UserPlan fail");
             }

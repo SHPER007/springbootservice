@@ -18,7 +18,7 @@
         where city_name like #{cityName}
     </select>
 
-    <insert id="addUserPlan" parameterType="com.example.springbootservice.domain.po.UserPlanBean" >
+    <insert id="createUserPlan" parameterType="com.example.springbootservice.domain.po.UserPlanBean" >
         INSERT INTO user_plan (userid,plan_name, start_time, end_time, location, created_at)
         VALUES (#{userid},#{planName}, #{startTime}, #{endTime}, #{location}, #{createdAt})
     </insert>

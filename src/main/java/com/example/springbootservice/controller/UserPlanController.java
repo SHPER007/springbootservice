@@ -29,13 +29,13 @@ public class UserPlanController {
         if (userPlanResDtoVo == null) {
             return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),ResponseCode.USER_DATA_IS_NULL.getDescription());
         }
-        log.info("head info res data:{}", userPlanResDtoVo.toString());
+        log.info("head info res data:{}", userPlanResDtoVo);
         return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), userPlanResDtoVo);
     }
 
     @PostMapping("/creat")
-    public BaseResponseResult addUserPlan(@RequestBody UserPlanDtoParam userPlanDtoParam) {
-        Boolean addUserPlanResult = userPlanService.addUserPlan(userPlanDtoParam);
+    public BaseResponseResult createUserPlan(@RequestBody UserPlanDtoParam userPlanDtoParam) {
+        Boolean addUserPlanResult = userPlanService.createUserPlan(userPlanDtoParam);
         if (addUserPlanResult) {
             return BaseResponseResult.success(HttpStatus.OK.value(), "200");
         }else {

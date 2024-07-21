@@ -11,7 +11,7 @@ import com.example.springbootservice.domain.responsevo.UserPlanResDto;
  */
 public interface UserPlanService {
     UserPlanResDto getUserPlan();
-    Boolean addUserPlan(UserPlanDtoParam userPlanDtoParam);
+    Boolean createUserPlan(UserPlanDtoParam userPlanDtoParam);
 
     Boolean clearUserPlanForToday();
 }
