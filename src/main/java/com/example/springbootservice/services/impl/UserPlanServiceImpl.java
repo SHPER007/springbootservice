@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.SuperLanguage;
 import com.example.springbootservice.conf.utils.ThreadLocalUtil;
-import com.example.springbootservice.domain.params.UserPlanDtoParam;
+import com.example.springbootservice.domain.params.UserPlanParam;
 import com.example.springbootservice.domain.po.UserPlan;
 import com.example.springbootservice.domain.po.UserPlanBean;
 import com.example.springbootservice.domain.responsevo.LanguageVo;
@@ -66,16 +66,16 @@ public class UserPlanServiceImpl implements UserPlanService {
      */
 
     @Override
-    public Boolean createUserPlan(UserPlanDtoParam userPlanDtoParam) {
-        if (userPlanDtoParam == null) {
+    public Boolean createUserPlan(UserPlanParam userPlanParam) {
+        if (userPlanParam == null) {
             return false;
         }
         try {
-            String planName = userPlanDtoParam.getPlanName();
-            OffsetDateTime planDate = userPlanDtoParam.getPlanDate();
-            String location = userPlanDtoParam.getLocation();
-            String endTime = userPlanDtoParam.getEndTime();
-            String startTime = userPlanDtoParam.getStartTime();
+            String planName = userPlanParam.getPlanName();
+            OffsetDateTime planDate = userPlanParam.getPlanDate();
+            String location = userPlanParam.getLocation();
+            String endTime = userPlanParam.getEndTime();
+            String startTime = userPlanParam.getStartTime();
             ArrayList<Long> timestampFromStringTime = DateFormatUtil.getTimestampFromStringTime(planDate, startTime, endTime);
             UserPlanBean userPlanBean = new UserPlanBean();
             userPlanBean.setPlanName(planName);

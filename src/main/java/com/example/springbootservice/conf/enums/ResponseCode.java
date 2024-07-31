@@ -3,6 +3,7 @@ package com.example.springbootservice.conf.enums;
 public enum ResponseCode {
     DELETE_SOURCE_FAILED(30005,"resource no found "),
     USER_DATA_IS_NULL(30000, "数据为空"),
+    USER_ARTICLES_IS_NULL(30001, "用户文章数据为空"),
     INSUFFICIENT_PERMISSIONS(40301, "权限不足");
 
 

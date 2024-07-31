@@ -1,6 +1,7 @@
 package com.example.springbootservice.mapper;
 
 import com.example.springbootservice.domain.po.User;
+import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,14 @@ public interface UserMapper {
     List<User> getAllUserList();
     User getUserById(Integer userId);
     List<User> pageUserList();
+
+    /**
+     *Params:
+     *Return:
+     *Description: 查询用户所有的文章列表
+     */
+
+    UserArticlesResDto getUserArticlesById(Integer userId);
 
 
 }

@@ -36,7 +36,6 @@ public class GenerateJwtUtil {
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("id", user.getUserid());
         userMap.put("name",user.getNickName());
-        System.out.println(expiresMs);
         String token = JWT.create()
                 .withClaim(userInfoKey, userMap)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expiresMs))

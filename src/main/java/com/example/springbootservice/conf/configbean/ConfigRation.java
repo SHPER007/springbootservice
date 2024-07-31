@@ -1,5 +1,8 @@
 package com.example.springbootservice.conf.configbean;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.example.springbootservice.conf.filter.TraceIdFilter;
 import com.example.springbootservice.conf.utils.RedisLockUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +54,17 @@ public class ConfigRation {
         return template;
     }
 
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        //     初始化核心插件
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        //     添加分页插件
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor(DbType.MYSQL);
+        // 设置最大分页条数
+        paginationInnerInterceptor.setMaxLimit(1000L);
+        mybatisPlusInterceptor.addInnerInterceptor(paginationInnerInterceptor);
+        return mybatisPlusInterceptor;
+    }
 
     @Bean
     public RestTemplate restTemplate() {
@@ -62,10 +76,17 @@ public class ConfigRation {
         return new RedisLockUtil();
 
     }
+
+    /**
+     *Params:[]
+     *Return:org.springframework.boot.web.servlet.FilterRegistrationBean<com.example.springbootservice.conf.filter.TraceIdFilter>
+     *Description: traced 拦截器
+     */
     @Bean
     @ConditionalOnMissingBean({TraceIdFilter.class})
     @Order(Ordered.HIGHEST_PRECEDENCE + 101)
     public FilterRegistrationBean<TraceIdFilter> TraceIdFilterFilterRegistration(){
+
         FilterRegistrationBean<TraceIdFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
         filterFilterRegistrationBean.setFilter(new TraceIdFilter());
         filterFilterRegistrationBean.addUrlPatterns("/*");

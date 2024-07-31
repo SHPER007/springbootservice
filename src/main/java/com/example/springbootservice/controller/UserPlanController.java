@@ -1,7 +1,7 @@
 package com.example.springbootservice.controller;
 
 import com.example.springbootservice.conf.enums.ResponseCode;
-import com.example.springbootservice.domain.params.UserPlanDtoParam;
+import com.example.springbootservice.domain.params.UserPlanParam;
 import com.example.springbootservice.domain.responsevo.UserPlanResDto;
 import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.services.UserPlanService;
@@ -34,12 +34,12 @@ public class UserPlanController {
     }
 
     @PostMapping("/creat")
-    public BaseResponseResult createUserPlan(@RequestBody UserPlanDtoParam userPlanDtoParam) {
-        Boolean addUserPlanResult = userPlanService.createUserPlan(userPlanDtoParam);
+    public BaseResponseResult createUserPlan(@RequestBody UserPlanParam userPlanParam) {
+        Boolean addUserPlanResult = userPlanService.createUserPlan(userPlanParam);
         if (addUserPlanResult) {
             return BaseResponseResult.success(HttpStatus.OK.value(), "200");
         }else {
-            return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),HttpStatus.OK.getReasonPhrase());
+            return BaseResponseResult.fail(ResponseCode.USER_DATA_IS_NULL.getValue(),ResponseCode.USER_DATA_IS_NULL.getDescription());
         }
     }
 

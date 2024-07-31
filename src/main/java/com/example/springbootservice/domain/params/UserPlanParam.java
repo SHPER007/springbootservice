@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
  * Date:2024/7/9 00:26
  */
 @Data
-public class UserPlanDtoParam {
+public class UserPlanParam {
     private String planName;
     private OffsetDateTime planDate;
     private String startTime;
