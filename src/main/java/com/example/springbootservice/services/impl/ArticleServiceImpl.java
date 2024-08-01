@@ -72,6 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         // 构建查询条件
         LambdaQueryWrapper<Articles> articlesLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        articlesLambdaQueryWrapper.eq(Articles::getUserid, ThreadLocalUtil.get());
         if (StringUtils.isNotBlank(articlePageParam.getTitle())){
             articlesLambdaQueryWrapper.like(Articles::getTitle, articlePageParam.getTitle());
         }
