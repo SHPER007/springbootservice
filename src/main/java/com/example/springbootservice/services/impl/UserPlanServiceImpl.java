@@ -118,9 +118,9 @@ public class UserPlanServiceImpl implements UserPlanService {
 
     public void setFormatTime(List<UserPlan> userPlanList){
         for (UserPlan userPlan : userPlanList) {
-            String starTime = DateFormatUtil.formatDate(Long.parseLong(userPlan.getStartTime()));
-            String endTime = DateFormatUtil.formatDate(Long.parseLong(userPlan.getEndTime()));
-            String creatTime = DateFormatUtil.formatDate(Long.parseLong(userPlan.getCreatedAt()));
+            String starTime = DateFormatUtil.formatDate(userPlan.getStartTime());
+            String endTime = DateFormatUtil.formatDate(userPlan.getEndTime());
+            String creatTime = DateFormatUtil.formatDate(userPlan.getCreatedAt());
             userPlan.setStartTime(starTime);
             userPlan.setEndTime(endTime);
             userPlan.setCreatedAt(creatTime);

@@ -22,8 +22,8 @@ public class Articles {
     private String content;
     private String weather;
     @TableField("update_time")
-    private Long updateTime;
+    private String updateTime;
     @TableField("create_time")
-    private Long creatTime;
+    private String creatTime;
 
 }

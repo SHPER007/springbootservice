@@ -2,6 +2,8 @@ package com.example.springbootservice.domain.params;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * ClassName:ArticlieListParam
  * Description:TODO
@@ -11,12 +13,9 @@ import lombok.Data;
 @Data
 public class ArticlePageParam extends PublicPageQuery {
 
-    private Long date;
+    private List<String> date;
     private String title;
     private String author;
-    /**
-     * 排序方式 0 正序  1 倒叙
-     */
-    private Integer sortOrder;
+
 
 }

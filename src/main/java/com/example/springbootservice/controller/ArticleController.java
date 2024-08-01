@@ -37,7 +37,7 @@ public class ArticleController {
     @PostMapping("/page")
     public BaseResponseResult getUserArticlesPage(@RequestBody ArticlePageParam articlePageParam){
         PublicPageDto<Articles> publicPageDto =  articleService.getUserArticlesPage(articlePageParam);
-        if (publicPageDto == null) {
+        if (publicPageDto == null || publicPageDto.getData().isEmpty()) {
             return BaseResponseResult.fail(ResponseCode.USER_ARTICLES_IS_NULL.getValue(),ResponseCode.USER_ARTICLES_IS_NULL.getDescription());
         }
         return BaseResponseResult.success(HttpStatus.OK.value(),HttpStatus.OK.getReasonPhrase(),publicPageDto);

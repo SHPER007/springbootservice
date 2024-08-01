@@ -18,8 +18,9 @@ public class DateFormatUtil {
      *Return:java.lang.String
      *Description: 时间戳格式化为 时间数据 2024-07-08
      */
-    public static String formatDate(Long timestamp) {
-        Instant instant = Instant.ofEpochMilli(timestamp);
+    public static String formatDate(String timestamp) {
+        Long timeStamp = Long.parseLong(timestamp);
+        Instant instant = Instant.ofEpochMilli(timeStamp);
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return  zonedDateTime.format(formatter);

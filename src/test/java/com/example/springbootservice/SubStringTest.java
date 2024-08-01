@@ -48,8 +48,6 @@ public class SubStringTest{
     }
     @Test
     public void testNumber(){
-        String s = DateFormatUtil.formatDate(1679986800000L);
-        System.out.println(s);
 
 
     }

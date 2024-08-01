@@ -10,7 +10,8 @@ import lombok.Data;
 public class PublicPageQuery{
     private Integer pageNo;
     private Integer pageSize;
-    private String orderBy;
+    // 枚举类 按照什么排序  0 按照创建时间 1 按照更新时间
+    private Integer orderBy;
     private Boolean isAsc;
 
 }
