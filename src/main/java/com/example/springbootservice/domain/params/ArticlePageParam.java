@@ -12,10 +12,9 @@ import java.util.List;
  */
 @Data
 public class ArticlePageParam extends PublicPageQuery {
-
-    private List<String> date;
+    // 0 公共文章  1 私有文章 2 待审核
+    private Integer  articleListType;
     private String title;
     private String author;
-
-
+    private List<String> date;
 }

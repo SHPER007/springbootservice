@@ -2,6 +2,7 @@ package com.example.springbootservice.services;
 
 import com.example.springbootservice.domain.params.ArticlePageParam;
 import com.example.springbootservice.domain.po.Articles;
+import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 
@@ -15,5 +16,8 @@ public interface ArticleService {
 
     UserArticlesResDto getUserArticlesByUserId();
 
-    PublicPageDto<Articles> getUserArticlesPage(ArticlePageParam articlePageParam);
+    PublicPageDto<Articles> getPublicArticlesList(ArticlePageParam articlePageParam);
+
+    ArticlesCategoryResDto getArticlesCategory();
+
 }

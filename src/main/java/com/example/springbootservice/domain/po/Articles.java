@@ -17,10 +17,15 @@ import lombok.NoArgsConstructor;
 public class Articles {
     private Integer id;
     private int userid;
+    // private ArticleCateGoryEnum articleCateGory;
     private String author;
     private String title;
     private String content;
     private String weather;
+    @TableField("is_public")
+    private Boolean isPublic;
+    @TableField("is_approved")
+    private Boolean isApproved;
     @TableField("update_time")
     private String updateTime;
     @TableField("create_time")

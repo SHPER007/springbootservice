@@ -9,8 +9,6 @@ package com.example.springbootservice.conf.contants;
 public class NavDefaultCity {
     public static final String DEFAULT_CITY = "郑州市";
     public static final String DEFAULT_CITY_AD_CODE = "410100";
-    public static final String DEFAULT_WEATHER = "If you live well,the day will be fine";
-    public static final String DEFAULT_WEATHER_TEMPERATURE = "30";
-    public static final String LIVE_WHEATHER_KEY = "liveWeatherKey";
-
+    public static final String DEFAULT_WEATHER = "service not found";
+    public static final String DEFAULT_WEATHER_TEMPERATURE = "适宜";
 }

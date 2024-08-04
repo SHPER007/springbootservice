@@ -4,6 +4,7 @@ import com.example.springbootservice.conf.enums.ResponseCode;
 import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.domain.params.ArticlePageParam;
 import com.example.springbootservice.domain.po.Articles;
+import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 import com.example.springbootservice.services.ArticleService;
@@ -25,22 +26,47 @@ public class ArticleController {
 
     @Resource
     private ArticleService articleService;
-    @GetMapping("/list")
+
+    @GetMapping("/all/list")
     public BaseResponseResult getUserArticlesByUserId() {
         UserArticlesResDto userArticlesResDto = articleService.getUserArticlesByUserId();
         if (userArticlesResDto == null) {
-            return BaseResponseResult.fail(ResponseCode.USER_ARTICLES_IS_NULL.getValue(),ResponseCode.USER_ARTICLES_IS_NULL.getDescription());
+            return BaseResponseResult.fail(ResponseCode.ARTICLES_IS_NULL.getValue(), ResponseCode.ARTICLES_IS_NULL.getDescription());
         }
-        return BaseResponseResult.success(HttpStatus.OK.value(),HttpStatus.OK.getReasonPhrase(),userArticlesResDto);
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), userArticlesResDto);
     }
 
-    @PostMapping("/page")
-    public BaseResponseResult getUserArticlesPage(@RequestBody ArticlePageParam articlePageParam){
-        PublicPageDto<Articles> publicPageDto =  articleService.getUserArticlesPage(articlePageParam);
+    @GetMapping("/category")
+    public BaseResponseResult getUserArticlesByCategory() {
+        ArticlesCategoryResDto articlesCategoryResDto = articleService.getArticlesCategory();
+        if (articlesCategoryResDto == null) {
+            return BaseResponseResult.fail(ResponseCode.ARTICLES_CATEGORY_IS_NULL.getValue(), ResponseCode.ARTICLES_CATEGORY_IS_NULL.getDescription());
+        }
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), articlesCategoryResDto);
+
+    }
+
+    /**
+     * Params:[articlePageParam]
+     * Return:com.example.springbootservice.domain.baseresponse.BaseResponseResult
+     * Description: 公共文章接口传入 不同的参数查询不同的文章列表
+     */
+    @PostMapping("/public/list")
+    public BaseResponseResult getPublicArticlesPage(@RequestBody ArticlePageParam articlePageParam) {
+        PublicPageDto<Articles> publicPageDto = articleService.getPublicArticlesList(articlePageParam);
         if (publicPageDto == null || publicPageDto.getData().isEmpty()) {
-            return BaseResponseResult.fail(ResponseCode.USER_ARTICLES_IS_NULL.getValue(),ResponseCode.USER_ARTICLES_IS_NULL.getDescription());
+            return BaseResponseResult.fail(ResponseCode.ARTICLES_IS_NULL.getValue(), ResponseCode.ARTICLES_IS_NULL.getDescription());
         }
-        return BaseResponseResult.success(HttpStatus.OK.value(),HttpStatus.OK.getReasonPhrase(),publicPageDto);
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), publicPageDto);
     }
 
+    @PostMapping("/personal/list")
+    public BaseResponseResult getUserArticlesList(@RequestBody ArticlePageParam articlePageParam) {
+        return getPublicArticlesPage(articlePageParam);
+    }
+
+    @PostMapping("/approved/list")
+    public BaseResponseResult getApproveArticlesList(@RequestBody ArticlePageParam articlePageParam) {
+        return getPublicArticlesPage(articlePageParam);
+    }
 }

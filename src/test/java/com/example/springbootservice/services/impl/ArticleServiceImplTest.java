@@ -20,7 +20,7 @@ class ArticleServiceImplTest {
         articlePageParam.setPageNo(1);
         articlePageParam.setPageSize(2);
         articlePageParam.setAuthor("Admin");
-        PublicPageDto<Articles> userArticlesPage = articleService.getUserArticlesPage(articlePageParam);
+        PublicPageDto<Articles> userArticlesPage = articleService.getPublicArticlesList(articlePageParam);
         System.out.println("当前页"+ userArticlesPage.getPages());
         System.out.println("总数"+ userArticlesPage.getTotal());
         userArticlesPage.getData().forEach(System.out::println);

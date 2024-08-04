@@ -29,7 +29,6 @@ public class WeatherCityApi {
             WeatherClientResVo weatherClientResVo = forEntity.getBody();
             if(weatherClientResVo != null && weatherClientResVo.getStatus().equals("1")){
                 List<LiveWeatherVo> listWeatherResDto = weatherClientResVo.getLives();
-                String weather = "";
                 for (LiveWeatherVo liveWeatherVo : listWeatherResDto) {
                     return liveWeatherVo;
                 }

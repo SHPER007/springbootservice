@@ -1,5 +1,6 @@
 package com.example.springbootservice.services.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.springbootservice.conf.contants.NavDefaultCity;
 import com.example.springbootservice.conf.contants.RedisExpire;
 import com.example.springbootservice.conf.resfulapi.WeatherCityApi;
@@ -49,10 +50,10 @@ public class NavInfoServiceImpl implements NavInfoService {
         HeadInfoResDto headInfoResDto = new HeadInfoResDto();
         headInfoResDto.setNickName(user.getNickName());
         String firstThreeStrCityName = SubStringUtil.getFirstThreeCharacters(user.getAddress());
-        if(firstThreeStrCityName == null){
+        if(StringUtils.isBlank(firstThreeStrCityName)){
             // 如果没有城市数据 直接设置用户的默认城市名称
             headInfoResDto.setCity(NavDefaultCity.DEFAULT_CITY);
-            Object redisWeatherResult = redisUtil.get(NavDefaultCity.LIVE_WHEATHER_KEY);
+            Object redisWeatherResult = redisUtil.getJavaBean(headInfoResDto.getCity(), LiveWeatherVo.class);
             if(redisWeatherResult != null){
                 headInfoResDto.setLiveWeatherRes((LiveWeatherVo)redisWeatherResult);
             }else {
@@ -62,7 +63,7 @@ public class NavInfoServiceImpl implements NavInfoService {
         }else {
             headInfoResDto.setCity(firstThreeStrCityName);
             // 先从缓存取数据
-            Object weatherResultCache = redisUtil.getJavaBean(NavDefaultCity.LIVE_WHEATHER_KEY, LiveWeatherVo.class);
+            Object weatherResultCache = redisUtil.getJavaBean(headInfoResDto.getCity(), LiveWeatherVo.class);
             if(weatherResultCache != null){
                 // 手动转redis对象数据
                 log.info("cache+redisWeatherResult:{}", weatherResultCache.getClass().getName());
@@ -87,14 +88,14 @@ public class NavInfoServiceImpl implements NavInfoService {
     public HeadInfoResDto setCityWeather(HeadInfoResDto headInfoResDto, LiveWeatherVo liveWeatherVo) {
         if (liveWeatherVo != null) {
             // 封装1个redis 手动解析方法
-            redisUtil.setJavaBean(NavDefaultCity.LIVE_WHEATHER_KEY, liveWeatherVo, RedisExpire.CACHE_WEATHER_EXPIRE_TIME);
+            redisUtil.setJavaBean(headInfoResDto.getCity(), liveWeatherVo, RedisExpire.CACHE_WEATHER_EXPIRE_TIME);
             headInfoResDto.setLiveWeatherRes(liveWeatherVo);
             return headInfoResDto;
         } else {
-            LiveWeatherVo liveWeatherDto = new LiveWeatherVo();
-            liveWeatherDto.setWeather(NavDefaultCity.DEFAULT_WEATHER);
-            liveWeatherDto.setCity(NavDefaultCity.DEFAULT_WEATHER_TEMPERATURE);
-            headInfoResDto.setLiveWeatherRes(liveWeatherDto);
+            LiveWeatherVo liveWeather = new LiveWeatherVo();
+            liveWeather.setWeather(NavDefaultCity.DEFAULT_WEATHER);
+            liveWeather.setTemperature(NavDefaultCity.DEFAULT_WEATHER_TEMPERATURE);
+            headInfoResDto.setLiveWeatherRes(liveWeather);
             return headInfoResDto;
         }
 

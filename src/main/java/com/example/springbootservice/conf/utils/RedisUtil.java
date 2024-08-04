@@ -56,7 +56,7 @@ public class RedisUtil {
             String json = getStringValueOperations().get(key);
             return objectMapper.readValue(json, clazz);
         } catch (Exception e) {
-            log.info("Error while setting value to Redis: " + e.getMessage(), e);
+            log.info("Error while setting value to Redis: {}", e.getMessage(), e);
             return null;
         }
     }

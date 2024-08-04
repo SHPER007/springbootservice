@@ -19,7 +19,6 @@ public class SuperLanguage {
         superLanguage.add(new LanguageVo("决定放弃了的事 就请放弃的干干净净  那些决定再也不见面的人 就真的不要见面了 请不用做背叛自己的事","The meaning of life is not to seek outward, but to build inward"));
         superLanguage.add(new LanguageVo("如果你抑郁了，说明你活在过去，如果你焦虑了，说明你活在未来，如果你平静了，才说明你活在现在。\n","The meaning of life is not to seek outward, but to build inward"));
         superLanguage.add(new LanguageVo("生命的意义本不在向外的的寻求，而在向内的建立","The meaning of life is not to seek outward, but to build inward"));
-        superLanguage.add(new LanguageVo("生命的意义本不在向外的的寻求，而在向内的建立","The meaning of life is not to seek outward, but to build inward"));
 
     }
     public static LanguageVo getSuperLanguage() {

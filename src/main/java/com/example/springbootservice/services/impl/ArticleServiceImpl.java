@@ -4,13 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springbootservice.conf.enums.ArticleListTypeEnum;
 import com.example.springbootservice.conf.enums.OrderByEnum;
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.ThreadLocalUtil;
 import com.example.springbootservice.domain.params.ArticlePageParam;
 import com.example.springbootservice.domain.po.Articles;
+import com.example.springbootservice.domain.po.ArticlesCategory;
+import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
+import com.example.springbootservice.mapper.ArticlesCategoryMapper;
 import com.example.springbootservice.mapper.ArticlesMapper;
 import com.example.springbootservice.services.ArticleService;
 import jakarta.annotation.Resource;
@@ -40,6 +44,10 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Resource
     ArticlesMapper articlesMapper;
+
+    @Resource
+    ArticlesCategoryMapper articlesCategoryMapper;
+
     @Override
     public UserArticlesResDto getUserArticlesByUserId() {
         List<Articles> articlesList = articlesMapper.selectList(new QueryWrapper<Articles>().lambda().eq(Articles::getUserid, ThreadLocalUtil.get()));
@@ -58,7 +66,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PublicPageDto<Articles> getUserArticlesPage(ArticlePageParam articlePageParam) {
+    public PublicPageDto<Articles> getPublicArticlesList(ArticlePageParam articlePageParam) {
         if (articlePageParam == null) {
             return null;
         }
@@ -70,9 +78,20 @@ public class ArticleServiceImpl implements ArticleService {
                 utcTimeStampList.add(epochMilli);
             });
         }
+
         // 构建查询条件
         LambdaQueryWrapper<Articles> articlesLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        articlesLambdaQueryWrapper.eq(Articles::getUserid, ThreadLocalUtil.get());
+        /*判断是查什么类型文章*/
+        System.out.println(articlePageParam.getArticleListType());
+        if(articlePageParam.getArticleListType() == ArticleListTypeEnum.PUBLIC_ARTICLES.getValue()){
+            articlesLambdaQueryWrapper.eq(Articles::getIsPublic, 1).eq(Articles::getIsApproved, 1);
+
+        } else if (articlePageParam.getArticleListType() == ArticleListTypeEnum.PERSONAL_ARTICLES.getValue()) {
+            articlesLambdaQueryWrapper.eq(Articles::getUserid, ThreadLocalUtil.get());
+        }else {
+            articlesLambdaQueryWrapper.eq(Articles::getIsPublic, 1).eq(Articles::getIsApproved, 0);
+        }
+
         if (StringUtils.isNotBlank(articlePageParam.getTitle())){
             articlesLambdaQueryWrapper.like(Articles::getTitle, articlePageParam.getTitle());
         }
@@ -113,6 +132,23 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
+    /**
+     *Params:[]
+     *Return:com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto
+     *Description: 文章分类接口
+     */
+    @Override
+    public ArticlesCategoryResDto getArticlesCategory() {
+
+        List<ArticlesCategory> articlesCategories = articlesCategoryMapper.selectList(new QueryWrapper<>());
+        if (articlesCategories == null || articlesCategories.isEmpty()) {
+            return null;
+        }
+        ArticlesCategoryResDto articlesCategoryResDto = new ArticlesCategoryResDto();
+        articlesCategoryResDto.setData(articlesCategories);
+        return articlesCategoryResDto;
+    }
+
     private static PublicPageDto<Articles> getArticlesPublicPageDto(Page<Articles> pageList) {
         PublicPageDto<Articles> publicPageDto = new PublicPageDto<>();
         publicPageDto.setTotal(pageList.getTotal());
@@ -127,6 +163,8 @@ public class ArticleServiceImpl implements ArticleService {
         publicPageDto.setData(records);
         return publicPageDto;
     }
+
+
 
 
 }
