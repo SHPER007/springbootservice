@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springbootservice.conf.enums.ArticleCateGoryEnum;
 import com.example.springbootservice.conf.enums.ArticleListTypeEnum;
 import com.example.springbootservice.conf.enums.OrderByEnum;
 import com.example.springbootservice.conf.utils.DateFormatUtil;
@@ -11,10 +12,12 @@ import com.example.springbootservice.conf.utils.ThreadLocalUtil;
 import com.example.springbootservice.domain.params.ArticlePageParam;
 import com.example.springbootservice.domain.po.Articles;
 import com.example.springbootservice.domain.po.ArticlesCategory;
+import com.example.springbootservice.domain.po.ArticlesFavorites;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 import com.example.springbootservice.mapper.ArticlesCategoryMapper;
+import com.example.springbootservice.mapper.ArticlesFavoritesMapper;
 import com.example.springbootservice.mapper.ArticlesMapper;
 import com.example.springbootservice.services.ArticleService;
 import jakarta.annotation.Resource;
@@ -46,6 +49,9 @@ public class ArticleServiceImpl implements ArticleService {
     ArticlesMapper articlesMapper;
 
     @Resource
+    ArticlesFavoritesMapper articlesFavoritesMapper;
+
+    @Resource
     ArticlesCategoryMapper articlesCategoryMapper;
 
     @Override
@@ -63,6 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
         UserArticlesResDto userArticlesResDto = new UserArticlesResDto();
         userArticlesResDto.setArticlesLists(articlesList);
         return userArticlesResDto;
+
     }
 
     @Override
@@ -82,14 +89,46 @@ public class ArticleServiceImpl implements ArticleService {
         // 构建查询条件
         LambdaQueryWrapper<Articles> articlesLambdaQueryWrapper = new LambdaQueryWrapper<>();
         /*判断是查什么类型文章*/
-        System.out.println(articlePageParam.getArticleListType());
         if(articlePageParam.getArticleListType() == ArticleListTypeEnum.PUBLIC_ARTICLES.getValue()){
             articlesLambdaQueryWrapper.eq(Articles::getIsPublic, 1).eq(Articles::getIsApproved, 1);
 
         } else if (articlePageParam.getArticleListType() == ArticleListTypeEnum.PERSONAL_ARTICLES.getValue()) {
             articlesLambdaQueryWrapper.eq(Articles::getUserid, ThreadLocalUtil.get());
         }else {
-            articlesLambdaQueryWrapper.eq(Articles::getIsPublic, 1).eq(Articles::getIsApproved, 0);
+            ArrayList<Integer> articlesFavoritesList = new ArrayList<>();
+            articlesFavoritesMapper.selectList(new LambdaQueryWrapper<ArticlesFavorites>().eq(ArticlesFavorites::getUserId, ThreadLocalUtil.get())).forEach(articlesFavorites -> {
+                articlesFavoritesList.add(articlesFavorites.getArticleId());
+            });
+            if(!articlesFavoritesList.isEmpty()){
+                articlesLambdaQueryWrapper.in(Articles::getId, articlesFavoritesList);
+            }
+        }
+        /*判断要查询不同列表中文章分类*/
+        // ALL_ARTICLES_CATEGORY(1, "全部文章"),
+        // EMOTION_ARTICLES_CATEGORY(2,"情感文章"),
+        //         LIFE_ARTICLES_CATEGORY(3, "生活文章"),
+        //         FINANCE_ARTICLES_CATEGORY(4, "财务文章"),
+        //         THINK_ARTICLES_CATEGORY(5, "感悟文章"),
+        //         OTHER_ARTICLES_CATEGORY(5, "其他文章");
+        switch (articlePageParam.getArticleClassify()) {
+            case 1:
+                break;
+            case 2:
+                articlesLambdaQueryWrapper.eq(Articles::getArticleCateGory, ArticleCateGoryEnum.EMOTION_ARTICLES_CATEGORY.getValue());
+                break;
+            case 3:
+                articlesLambdaQueryWrapper.eq(Articles::getArticleCateGory, ArticleCateGoryEnum.LIFE_ARTICLES_CATEGORY.getValue());
+                break;
+            case 4:
+                articlesLambdaQueryWrapper.eq(Articles::getArticleCateGory, ArticleCateGoryEnum.FINANCE_ARTICLES_CATEGORY.getValue());
+                break;
+            case 5:
+                articlesLambdaQueryWrapper.eq(Articles::getArticleCateGory, ArticleCateGoryEnum.THINK_ARTICLES_CATEGORY.getValue());
+                break;
+            case 6:
+                articlesLambdaQueryWrapper.eq(Articles::getArticleCateGory, ArticleCateGoryEnum.OTHER_ARTICLES_CATEGORY.getValue());
+                break;
+
         }
 
         if (StringUtils.isNotBlank(articlePageParam.getTitle())){

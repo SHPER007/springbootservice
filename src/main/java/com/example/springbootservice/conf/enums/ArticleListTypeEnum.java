@@ -12,7 +12,7 @@ import lombok.Getter;
 public enum ArticleListTypeEnum {
     PUBLIC_ARTICLES(0, "公共文章"),
     PERSONAL_ARTICLES(1, "个人文章"),
-    APPROVE_ARTICLES(2, "审核文章");
+    FAVORITES_ARTICLES(2, "收藏文章");
     private final int value;
     private final String description;
     ArticleListTypeEnum(int value, String description) {

@@ -1,6 +1,7 @@
 package com.example.springbootservice.domain.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.example.springbootservice.conf.enums.ArticleCateGoryEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ import lombok.NoArgsConstructor;
 public class Articles {
     private Integer id;
     private int userid;
-    // private ArticleCateGoryEnum articleCateGory;
+    @TableField("category_id")
+    private ArticleCateGoryEnum articleCateGory;
     private String author;
     private String title;
     private String content;

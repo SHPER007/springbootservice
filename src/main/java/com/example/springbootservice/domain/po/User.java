@@ -28,12 +28,9 @@ public class User {
 
     @TableField("nickname")
     private String nickName;
-
     @TableField(exist=false)
     private String phoneNumber;
-
     private String address;
-
     @TableField(exist=false)
     private String password;
 
