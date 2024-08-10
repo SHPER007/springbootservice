@@ -24,7 +24,6 @@ public class DateFormatUtil {
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return  zonedDateTime.format(formatter);
-
     }
 
     public static ArrayList<Long> getTimestampFromStringTime(OffsetDateTime offsetDateTime, String  localStartTime, String localEndTime) {

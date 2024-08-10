@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     public BaseResponseResult nullPointerExceptionRun(HttpServletRequest request, Throwable e){
         String message = "服务繁忙,请稍后再试！";
         log.info("全局捕获异常{}", e.toString());
-        return BaseResponseResult.fail(HttpStatus.NOT_FOUND.value(), message);
+        return BaseResponseResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), message);
     }
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ExceptionHandler(JwtGenerationException.class)

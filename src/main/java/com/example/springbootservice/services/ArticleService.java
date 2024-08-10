@@ -1,6 +1,7 @@
 package com.example.springbootservice.services;
 
 import com.example.springbootservice.domain.params.ArticlePageParam;
+import com.example.springbootservice.domain.params.ArticleParam;
 import com.example.springbootservice.domain.po.Articles;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
@@ -20,4 +21,5 @@ public interface ArticleService {
 
     ArticlesCategoryResDto getArticlesCategory();
 
+    Boolean createArticle(ArticleParam articleParam);
 }

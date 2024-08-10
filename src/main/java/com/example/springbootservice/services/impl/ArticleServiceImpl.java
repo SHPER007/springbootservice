@@ -5,26 +5,31 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springbootservice.conf.enums.ArticleCateGoryEnum;
+import com.example.springbootservice.conf.enums.ArticleIsPublicEnum;
 import com.example.springbootservice.conf.enums.ArticleListTypeEnum;
 import com.example.springbootservice.conf.enums.OrderByEnum;
 import com.example.springbootservice.conf.utils.DateFormatUtil;
 import com.example.springbootservice.conf.utils.ThreadLocalUtil;
 import com.example.springbootservice.domain.params.ArticlePageParam;
+import com.example.springbootservice.domain.params.ArticleParam;
 import com.example.springbootservice.domain.po.Articles;
 import com.example.springbootservice.domain.po.ArticlesCategory;
 import com.example.springbootservice.domain.po.ArticlesFavorites;
+import com.example.springbootservice.domain.po.User;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 import com.example.springbootservice.mapper.ArticlesCategoryMapper;
 import com.example.springbootservice.mapper.ArticlesFavoritesMapper;
 import com.example.springbootservice.mapper.ArticlesMapper;
+import com.example.springbootservice.mapper.UserMapper;
 import com.example.springbootservice.services.ArticleService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -45,6 +50,9 @@ public class ArticleServiceImpl implements ArticleService {
      *Return:com.example.springbootservice.domain.responsevo.UserArticlesResDto
      *Description: 文章查询列表
      */
+
+    @Resource
+    UserMapper userMapper;
     @Resource
     ArticlesMapper articlesMapper;
 
@@ -101,6 +109,8 @@ public class ArticleServiceImpl implements ArticleService {
             });
             if(!articlesFavoritesList.isEmpty()){
                 articlesLambdaQueryWrapper.in(Articles::getId, articlesFavoritesList);
+            }else {
+                return null;
             }
         }
         /*判断要查询不同列表中文章分类*/
@@ -188,11 +198,62 @@ public class ArticleServiceImpl implements ArticleService {
         return articlesCategoryResDto;
     }
 
+    @Override
+    public Boolean createArticle(ArticleParam articleParam) {
+        // 判断参数
+        if (articleParam == null) {
+            return false;
+        }
+        if (articleParam.getCategoryId() == null){
+            return false;
+        }else {
+            if (articleParam.getCategoryId() < 2 || articleParam.getCategoryId() > 6){
+                return false;
+            }
+        }
+        ArticleCateGoryEnum articleCateGoryEnum;
+        try {
+            articleCateGoryEnum = ArticleCateGoryEnum.getEnum(articleParam.getCategoryId());
+        }catch (Exception e){
+            log.info("create article error", e);
+            return false;
+        }
+
+        Articles articles = new Articles();
+        articles.setArticleCateGory(articleCateGoryEnum);
+        articles.setTitle(articleParam.getTitle());
+        articles.setContent(articleParam.getContent());
+        articles.setCreatePlace(articleParam.getPlace());
+        articles.setWeather(articleParam.getWeather());
+        articles.setUserid(ThreadLocalUtil.get());
+        User user = userMapper.getUserById(ThreadLocalUtil.get());
+        articles.setAuthor(user.getNickName());
+        if(articleParam.getIsPublic()!= null){
+            if (articleParam.getIsPublic() == ArticleIsPublicEnum.ARTICLE_PUBLIC.getValue()){
+                articles.setIsPublic(true);
+                articles.setIsApproved(false);
+            }else {
+                articles.setIsPublic(false);
+                articles.setIsApproved(false);
+            }
+        }
+        articles.setCreatTime(String.valueOf(Instant.now().toEpochMilli()));
+        articles.setUpdateTime(String.valueOf(Instant.now().toEpochMilli()));
+        int insert = articlesMapper.insert(articles);
+        if (insert == 1){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
     private static PublicPageDto<Articles> getArticlesPublicPageDto(Page<Articles> pageList) {
         PublicPageDto<Articles> publicPageDto = new PublicPageDto<>();
         publicPageDto.setTotal(pageList.getTotal());
         publicPageDto.setPages(pageList.getPages());
         List<Articles> records = pageList.getRecords();
+        // 你不能保证查出的数据 item.getUpdateTime() 不为null 所以还是得先判断
         records.forEach(item -> {
             String creatTimeFormat = DateFormatUtil.formatDate(item.getCreatTime());
             String updateTimeFormat = DateFormatUtil.formatDate(item.getUpdateTime());

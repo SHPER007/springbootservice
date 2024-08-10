@@ -26,4 +26,15 @@ public enum ArticleCateGoryEnum {
 
     }
 
+    // 提供一个方法 ,根据值来查询对相应的枚举类型
+    public static ArticleCateGoryEnum getEnum(int value) {
+        for (ArticleCateGoryEnum item : ArticleCateGoryEnum.values()) {
+            if (item.value == value) {
+                return item;
+            }
+        }
+       throw new IllegalArgumentException("No matching category found for value: " + value);
+    }
+
+
 }

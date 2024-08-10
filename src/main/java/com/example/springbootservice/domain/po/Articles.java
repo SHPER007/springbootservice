@@ -17,13 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Articles {
     private Integer id;
-    private int userid;
+    private Integer userid;
     @TableField("category_id")
     private ArticleCateGoryEnum articleCateGory;
     private String author;
     private String title;
     private String content;
     private String weather;
+    private String createPlace;
     @TableField("is_public")
     private Boolean isPublic;
     @TableField("is_approved")

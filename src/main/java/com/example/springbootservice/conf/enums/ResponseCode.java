@@ -5,7 +5,8 @@ public enum ResponseCode {
     USER_DATA_IS_NULL(30000, "用户计划数据为空"),
     ARTICLES_IS_NULL(30001, "用户文章数据为空"),
     INSUFFICIENT_PERMISSIONS(40301, "权限不足"),
-    ARTICLES_CATEGORY_IS_NULL(30000,"文章分类数据为空");
+    ARTICLES_CATEGORY_IS_NULL(30000,"文章分类数据为空"),
+    ARTICLES_CREATE_FAIL(30000,"创建文章数据失败");
 
 
     private final int value;

@@ -3,6 +3,7 @@ package com.example.springbootservice.controller;
 import com.example.springbootservice.conf.enums.ResponseCode;
 import com.example.springbootservice.domain.baseresponse.BaseResponseResult;
 import com.example.springbootservice.domain.params.ArticlePageParam;
+import com.example.springbootservice.domain.params.ArticleParam;
 import com.example.springbootservice.domain.po.Articles;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
@@ -34,6 +35,15 @@ public class ArticleController {
             return BaseResponseResult.fail(ResponseCode.ARTICLES_IS_NULL.getValue(), ResponseCode.ARTICLES_IS_NULL.getDescription());
         }
         return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), userArticlesResDto);
+    }
+    @PostMapping("/create")
+    public BaseResponseResult createArticle(@RequestBody ArticleParam articleParam){
+        Boolean isCreateArticleSuccess = articleService.createArticle(articleParam);
+        if (!isCreateArticleSuccess) {
+            return BaseResponseResult.fail(ResponseCode.ARTICLES_CREATE_FAIL.getValue(), ResponseCode.ARTICLES_CREATE_FAIL.getDescription());
+        }
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase());
+
     }
 
     @GetMapping("/category")
