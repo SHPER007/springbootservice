@@ -4,6 +4,7 @@ import com.example.springbootservice.domain.params.ArticlePageParam;
 import com.example.springbootservice.domain.params.ArticleParam;
 import com.example.springbootservice.domain.po.Articles;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
+import com.example.springbootservice.domain.responsevo.ArticlesDetailResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 
@@ -22,4 +23,8 @@ public interface ArticleService {
     ArticlesCategoryResDto getArticlesCategory();
 
     Boolean createArticle(ArticleParam articleParam);
+
+    ArticlesDetailResDto queryArticleById(Integer id);
+
+    Boolean updateArticleById(ArticleParam articleParam);
 }

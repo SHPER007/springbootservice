@@ -3,7 +3,6 @@
 
     <springProperty scope="context" name="appName" source="spring.application.name"/>
 
-
     <Property name="globalVar" value="sql"/>
 
     <!-- 输出到控制台 -->

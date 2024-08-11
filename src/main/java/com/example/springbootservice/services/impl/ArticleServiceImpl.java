@@ -2,10 +2,10 @@ package com.example.springbootservice.services.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springbootservice.conf.enums.ArticleCateGoryEnum;
-import com.example.springbootservice.conf.enums.ArticleIsPublicEnum;
 import com.example.springbootservice.conf.enums.ArticleListTypeEnum;
 import com.example.springbootservice.conf.enums.OrderByEnum;
 import com.example.springbootservice.conf.utils.DateFormatUtil;
@@ -17,6 +17,7 @@ import com.example.springbootservice.domain.po.ArticlesCategory;
 import com.example.springbootservice.domain.po.ArticlesFavorites;
 import com.example.springbootservice.domain.po.User;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
+import com.example.springbootservice.domain.responsevo.ArticlesDetailResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 import com.example.springbootservice.mapper.ArticlesCategoryMapper;
@@ -62,6 +63,82 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     ArticlesCategoryMapper articlesCategoryMapper;
 
+
+
+    /**
+     *Params:[id]
+     *Return:com.example.springbootservice.domain.po.Articles
+     *Description: 根据文章articleId查询文章
+     */
+    @Override
+    public ArticlesDetailResDto queryArticleById(Integer articleId) {
+        // 不能传递什么文章id 都返回给用户
+        if(Objects.isNull(articleId) || articleId <= 0){
+            return null;
+        }
+        Articles articles = articlesMapper.selectOne(new QueryWrapper<Articles>().lambda()
+                .eq(Articles::getId, articleId).eq(Articles::getUserid,ThreadLocalUtil.get()));
+        if(articles == null){
+            return null;
+        }
+        ArticlesDetailResDto articlesDetailResDto = new ArticlesDetailResDto();
+        articlesDetailResDto.setTitle(articles.getTitle());
+        articlesDetailResDto.setContent(articles.getContent());
+        articlesDetailResDto.setArticleCateGory(articles.getArticleCateGory().getCategory());
+        articlesDetailResDto.setWeather(articles.getWeather());
+        articlesDetailResDto.setCreatePlace(articles.getCreatePlace());
+        if(articles.getIsPublic()) {
+            articlesDetailResDto.setIsPublic(true);
+        }else {
+            articlesDetailResDto.setIsPublic(false);
+        }
+        return articlesDetailResDto;
+    }
+    /**
+     *Params:[articleParam]
+     *Return:java.lang.Boolean
+     *Description: 更新文章
+     */
+    @Override
+    public Boolean updateArticleById(ArticleParam articleParam) {
+        if (articleParam == null){
+            return false;
+        }
+        if (articleParam.getArticleCateGory() == null){
+            return false;
+        }
+        if (articleParam.getArticleCateGory() < 2 || articleParam.getArticleCateGory() > 6){
+            return false;
+        }
+        Articles articles = new Articles();
+        articles.setTitle(articleParam.getTitle());
+        articles.setContent(articleParam.getContent());
+        articles.setArticleCateGory(ArticleCateGoryEnum.getEnum(articleParam.getArticleCateGory()));
+        articles.setWeather(articleParam.getWeather());
+        articles.setCreatePlace(articleParam.getCreatePlace());
+        articles.setIsApproved(false);
+        if(articleParam.getIsPublic()){
+            articles.setIsApproved(false);
+            articles.setIsPublic(true);
+        }else {
+            articles.setIsApproved(false);
+            articles.setIsPublic(false);
+        }
+        articles.setUpdateTime(String.valueOf(Instant.now().toEpochMilli()));
+        int update = articlesMapper.update(articles, new UpdateWrapper<Articles>().lambda()
+                .eq(Articles::getId, articleParam.getArticleId()).eq(Articles::getUserid, ThreadLocalUtil.get()));
+        if(update == 0){
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     *Params:[]
+     *Return:com.example.springbootservice.domain.responsevo.UserArticlesResDto
+     *Description:根据用户id查询用户文章
+     */
     @Override
     public UserArticlesResDto getUserArticlesByUserId() {
         List<Articles> articlesList = articlesMapper.selectList(new QueryWrapper<Articles>().lambda().eq(Articles::getUserid, ThreadLocalUtil.get()));
@@ -77,9 +154,13 @@ public class ArticleServiceImpl implements ArticleService {
         UserArticlesResDto userArticlesResDto = new UserArticlesResDto();
         userArticlesResDto.setArticlesLists(articlesList);
         return userArticlesResDto;
-
     }
 
+    /**
+     *Params:[articlePageParam]
+     *Return:com.example.springbootservice.domain.responsevo.PublicPageDto<com.example.springbootservice.domain.po.Articles>
+     *Description:搜索接口和不同文章页面数据接口 根据传入值的不同 返回不同的数据
+     */
     @Override
     public PublicPageDto<Articles> getPublicArticlesList(ArticlePageParam articlePageParam) {
         if (articlePageParam == null) {
@@ -113,13 +194,7 @@ public class ArticleServiceImpl implements ArticleService {
                 return null;
             }
         }
-        /*判断要查询不同列表中文章分类*/
-        // ALL_ARTICLES_CATEGORY(1, "全部文章"),
-        // EMOTION_ARTICLES_CATEGORY(2,"情感文章"),
-        //         LIFE_ARTICLES_CATEGORY(3, "生活文章"),
-        //         FINANCE_ARTICLES_CATEGORY(4, "财务文章"),
-        //         THINK_ARTICLES_CATEGORY(5, "感悟文章"),
-        //         OTHER_ARTICLES_CATEGORY(5, "其他文章");
+        /*判断要查询不同列表中文章分类 1, "全部文章" 2,"情感文章" 3, "生活文章" 4, "财务文章"5, "感悟文章"6, "其他文章")*/
         switch (articlePageParam.getArticleClassify()) {
             case 1:
                 break;
@@ -197,23 +272,28 @@ public class ArticleServiceImpl implements ArticleService {
         articlesCategoryResDto.setData(articlesCategories);
         return articlesCategoryResDto;
     }
-
+    /**
+     *Params:[articleParam]
+     *Return:java.lang.Boolean
+     *Description:创建文章数据接口
+     */
     @Override
     public Boolean createArticle(ArticleParam articleParam) {
+
         // 判断参数
         if (articleParam == null) {
             return false;
         }
-        if (articleParam.getCategoryId() == null){
+        if (articleParam.getArticleCateGory() == null){
             return false;
         }else {
-            if (articleParam.getCategoryId() < 2 || articleParam.getCategoryId() > 6){
+            if (articleParam.getArticleCateGory() < 2 || articleParam.getArticleCateGory() > 6){
                 return false;
             }
         }
         ArticleCateGoryEnum articleCateGoryEnum;
         try {
-            articleCateGoryEnum = ArticleCateGoryEnum.getEnum(articleParam.getCategoryId());
+            articleCateGoryEnum = ArticleCateGoryEnum.getEnum(articleParam.getArticleCateGory());
         }catch (Exception e){
             log.info("create article error", e);
             return false;
@@ -223,19 +303,17 @@ public class ArticleServiceImpl implements ArticleService {
         articles.setArticleCateGory(articleCateGoryEnum);
         articles.setTitle(articleParam.getTitle());
         articles.setContent(articleParam.getContent());
-        articles.setCreatePlace(articleParam.getPlace());
+        articles.setCreatePlace(articleParam.getCreatePlace());
         articles.setWeather(articleParam.getWeather());
         articles.setUserid(ThreadLocalUtil.get());
         User user = userMapper.getUserById(ThreadLocalUtil.get());
         articles.setAuthor(user.getNickName());
-        if(articleParam.getIsPublic()!= null){
-            if (articleParam.getIsPublic() == ArticleIsPublicEnum.ARTICLE_PUBLIC.getValue()){
-                articles.setIsPublic(true);
-                articles.setIsApproved(false);
-            }else {
-                articles.setIsPublic(false);
-                articles.setIsApproved(false);
-            }
+        if(articleParam.getIsPublic()){
+            articles.setIsPublic(true);
+            articles.setIsApproved(false);
+        }else {
+            articles.setIsPublic(false);
+            articles.setIsApproved(false);
         }
         articles.setCreatTime(String.valueOf(Instant.now().toEpochMilli()));
         articles.setUpdateTime(String.valueOf(Instant.now().toEpochMilli()));
@@ -248,6 +326,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
+    /**
+     *Params:[pageList]
+     *Return:com.example.springbootservice.domain.responsevo.PublicPageDto<com.example.springbootservice.domain.po.Articles>
+     *Description:公共方法 转换数据格式
+     */
     private static PublicPageDto<Articles> getArticlesPublicPageDto(Page<Articles> pageList) {
         PublicPageDto<Articles> publicPageDto = new PublicPageDto<>();
         publicPageDto.setTotal(pageList.getTotal());

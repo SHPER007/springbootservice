@@ -6,6 +6,7 @@ import com.example.springbootservice.domain.params.ArticlePageParam;
 import com.example.springbootservice.domain.params.ArticleParam;
 import com.example.springbootservice.domain.po.Articles;
 import com.example.springbootservice.domain.responsevo.ArticlesCategoryResDto;
+import com.example.springbootservice.domain.responsevo.ArticlesDetailResDto;
 import com.example.springbootservice.domain.responsevo.PublicPageDto;
 import com.example.springbootservice.domain.responsevo.UserArticlesResDto;
 import com.example.springbootservice.services.ArticleService;
@@ -27,6 +28,27 @@ public class ArticleController {
 
     @Resource
     private ArticleService articleService;
+
+
+    @GetMapping("/{articleId}")
+    public BaseResponseResult getArticleById(@PathVariable Integer articleId) {
+        ArticlesDetailResDto articlesDetailResDto = articleService.queryArticleById(articleId);
+        if (articlesDetailResDto == null) {
+            return BaseResponseResult.fail(ResponseCode.ARTICLES_DETAIL_IS_NULL.getValue(),ResponseCode.ARTICLES_DETAIL_IS_NULL.getDescription());
+        }
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), articlesDetailResDto);
+    }
+
+    @PostMapping("/update")
+    public BaseResponseResult updateArticleById(@RequestBody ArticleParam articleParam) {
+        Boolean isUpdateArticleSuccess = articleService.updateArticleById(articleParam);
+        if (!isUpdateArticleSuccess) {
+            return BaseResponseResult.fail(ResponseCode.ARTICLES_UPDATE_FAIL.getValue(),ResponseCode.ARTICLES_UPDATE_FAIL.getDescription());
+        }
+        return BaseResponseResult.success(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase());
+    }
+
+
 
     @GetMapping("/all/list")
     public BaseResponseResult getUserArticlesByUserId() {
